@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML to PDF Optimized</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- font imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Linden+Hill:ital@0;1&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+  <style>
+    #main {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #inputs {
+      width: 30%;
+    }
+
+    #output {
+      padding: 20px;
+      background-color: gray;
+      width: 60%;
+    }
+
+    #renderTarget {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 210mm;
+      height: 297mm;
+      padding: 20mm;
+      background: white;
+      /* font-family: Comic Sans MS, sans-serif; */
+      /* font-family: Arial, sans-serif; */
+        /* font-family: Times, serif; */
+      /* font-family: Bodoni Moda, serif; */
+      /* font-family: Linden Hill, serif; */
+      /* TEST STUFF */
+      /* border: 1px solid red; */
+    }
+
+    /* #renderTarget p {
+      color: red;
+    }
+
+    #renderTarget div {
+      border: 1px solid red;
+    }
+
+    #renderTarget header {
+      border: 1px solid blue;
+    } */
+
+
+    /* template styling */
+
+    @font-face {
+        font-family: signatureFont;
+        src: url("assets/signaturefont.ttf");
+    }
+
+    
+
+
+    .senderSignature {
+      font-family: signatureFont, cursive;
+      font-size: 84px;
+      margin: -20px;
+    }
+
+    .template1 {
+      /* border: 1px solid green; */
+      /* font-family: 'Times New Roman', Times, serif; */
+      font-size: 18px;
+    }
+
+    .template1 span {
+        margin: 0;
+    }
+
+    .template1 .firmName {
+        font-size: 24px;
+        text-align: center;
+    }
+    .template1 .firmAddress {
+        /* border: 1px solid yellow; */
+        text-align: center;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    .template1 .addressLine {
+      margin: 0;
+    }
+    
+    /* .template1 .firmPartners {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-self: flex-end;
+        gap: 0px 40px;
+    }
+ */
+
+ .template1 .firmPartners {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-end;
+        gap: 0px;
+        width: 100%;
+    }
+
+    .template1 .firmPartners.two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0px 40px;
+        width: 100%;
+    }
+
+    .template1 .firmPartners.three-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0px 40px;
+        width: 100%;
+    }
+
+    .template1 .firmPartners.four-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 0px 30px;
+        width: 100%;
+    }
+
+    .template1 .firmPartners.five-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 0px 25px;
+        width: 100%;
+    }
+
+    .firmPartner {
+        margin: 0;
+        align-self: flex-end;
+    }
+    .template1 .date {
+        margin-top: 10px;
+      align-self: flex-end;
+    }
+    
+    .template1 .letterFooter {
+      margin-top: 10px;
+      align-self: flex-end;
+      text-align: right;
+    }
+  </style>
+
+  <script>  
+
+    let imageData = null;
+
+
+    const addresses = [
+        ['Boylston St.', 'Boston, MA, 02116'],
+        ['E Wolf Point Plaza', 'Chicago, IL , 60606'],
+        ['Louisiana St.', 'Houston, TX, 77002'],
+        ['Avenue of the Stars', 'Los Angeles, CA, 90067'],
+        ['6th Ave', 'New York, NY, 10019'],
+        ['University Ave.', 'Palo Alto, CA, 94301'],
+        ['New York Ave., NW', 'Washington, DC, 20005'],
+        ['Lexington Ave', 'New York, NY, 10022'],
+        ['Century Park East', 'Los Angeles, CA, 90067'],
+        ['K Street, NW', 'Washington, DC, 20006'],
+        ['Avenue of the Americas', 'New York, NY, 10020'],
+        ['State Street', 'Boston, MA, 02109'],
+        ['South Biscayne Boulevard', 'Miami, FL, 33131']
+    ]
+
+    const nameSources = {
+        mayflower : {
+            first: ['John', 'Ellen', 'John', 'Francis', 'Christopher', 'Mary', 'Solomon', 'William', 'Joseph', 'Priscilla', 'Robert', 'Alice', 'Miles', 'Rose', 'Francis', 'Sarah', 'Samuel', 'Stephen', 'Elizabeth', 'Giles', 'Constance', 'Damaris', 'Oceanus', 'Edward', 'Richard', 'Edmond', 'Peter', 'Robert', 'Giles', 'Thomas', 'Andrew', 'Catherine', 'Desire', 'Roger', 'William', 'Jasper', 'Dorothy', 'Edward', 'Elizabeth', 'George', 'Elias', 'Gilbert', 'Love', 'Wrestling', 'Richard', 'Isaac', 'Bartholomew', 'Remember', 'Susanna', 'Resolved', 'Agnus', 'Henry', 'Humility', 'Joan', 'Ann', 'James', 'Moses', 'Digory'],
+            last: ['Billington', 'Martin', 'Prower', 'Langemore', 'Mullins', 'Carter', 'Rigsdale', 'Standish', 'Eaton', 'Hopkins', 'Fisher', 'Doten', 'Leister', 'Britteridge', 'Clarke', 'Gardiner', 'Margeson', 'Brown', 'Warren', 'Jones', 'Alden', 'Coppin', 'Heale', 'English', 'Allerton', 'Parker', 'Trevore', 'Williamson', 'Carver', 'White', 'Minter', 'Howland', 'Wilder', 'Latham', 'More', 'Bradford', 'May', 'Winslow', 'Barker', 'Soule', 'Story', 'Brewster', 'Norris', 'Hooke', 'Jackson', 'Holbeck', 'Thompson', 'Tilley', 'Cooper', 'Sampson', 'Hurst', 'Cook', 'Rogers', 'Tinker', 'Fuller', 'Turner', 'Chilton', 'Crackstone']
+        },
+        greenwich : {
+            first : ['Michael', 'Patricia', 'Thomas', 'Javier', 'Francia', 'Craig', 'Gerald', 'Jennifer', 'Debbie', 'Hector', 'Katharine', 'Walter', 'Jillian', 'Seth', 'Hale', 'Isra', 'Lisa', 'Sally', 'Eric', 'Kimberly', 'Andrea', 'Maria', 'John', 'Ellen', 'Edward', 'Adam', 'Gregory', 'Joshua', '', 'Francis', 'Margaret', 'Marilyn', 'Glen', 'Jill', 'James', 'Ronald', 'Robert', 'Claudia', 'Nicole', 'Linda', 'Christopher', 'Donald', 'Charles', 'Stephanie', 'Allyson', 'Peter', 'Keith', 'Valerie', 'Barbara', 'Blake', 'Christina', 'Carol', 'Alice', 'Elizabeth', 'Christine', 'Laura', 'Tiffany', 'Morgan', 'Susan', 'Frederick', 'Douglas', 'Pamela', 'Noah', 'Mary', 'Dawn', 'Allison', 'Tracy', 'William', 'Lynn', 'Marianne', 'Donna', 'Paul', 'Alison', 'Karen', 'Dean', 'Amaris', 'Hilary', 'Ogden', 'Ingrid', 'Sandra', 'Ramya', 'Daniel', 'Samuelle', 'Coline', 'Jonathan', 'Cathleen', 'Joseph', 'Myra', 'Jan', 'Lucy', 'Genevieve', 'Julia', 'Abbe', 'Kathleen', 'Sharon', 'Brigitte', 'Martin', 'Aaron', 'David', 'Nan', 'Mark', 'Lindy', 'Katherine', 'Rosemarie', 'Brian', 'Abigail', 'Janet', 'Jaysen', 'Stephen', 'Richard', 'Anthony', 'Noelle', 'Victoria', 'Cheryl', 'Ammar', 'Rosalind', 'Kristen', 'Lauren', 'Sean', 'Andrew', 'Jane', 'Vinay', 'Averardo', 'Aakash', 'Sylvester', 'Sheila', 'Kara', 'Nerlyn', 'Alexander', 'Jocelyn', 'Caryn', 'Chloe', 'Samuel', 'Felice', 'Geralyn', 'Steven', 'Diego', 'Sophia', 'Ferdinando', 'Vernon', 'Pragati', 'Cathryn', 'Joanne', 'Louisa', 'Amelia', 'Joyce', 'Joan', 'Maya', 'Jeffrey', 'Karsten', 'Alexis', 'Erika', 'Michelle', 'Catherine', 'Stacey', 'Jordan', 'Cliff', 'Stacy', 'Bonnie'],
+            last: ['Acerbo', 'Aleman', 'Amundson', 'Anderson', 'Andrews', 'Appelbaum', 'Arzeno', 'Ashworth', 'Auch', 'Aufderheide', 'Bacon', 'Bayram', 'Edmundson', 'Bednar', 'Behringer', 'Beiley', 'Blank', 'Blume', 'Bocchino', 'Bologna', 'Brennan-Galvin', 'Broadhurst', 'Brodsky', 'Brown', 'Brumberg', 'Burgweger', 'Butler', 'Cahill', 'Cahn', 'Canner', 'Capalbo', 'Capparelle', 'Carosella', 'Carroll', 'Carter', 'Carthaus', 'Casson', 'Chaney', 'Chapman', 'Chaudhri', 'Cochran', 'Colford', 'Collins', 'Conway', 'Costello', 'Cowie', 'Cowin', 'Cruikshank', 'Dadakis', 'Damsky', 'Darula', 'DeFelice', 'Delany', 'Devaney', 'Dietrich', 'Downey', 'Ducret', 'Duff', 'Eckert', 'Edwards', 'Estevez', 'Evangelista', 'Evans', 'Feldman', 'Fenton', 'Ferraro', 'Finn', 'Finz', 'Flynn', 'Fontana', 'Fortunato', 'Frantz', 'Freedman', 'Galindo', 'Galvin', 'Garelick', 'Gaudioso-Zeale', 'Genvovese', 'Ghiorse', 'Giannuzzi', 'Gladstone', 'Goldstein', 'Goss', 'Guadalupe', 'Gunn', 'Hammond', 'Hang', 'Haroche', 'Harris', 'Shaye', 'Hindman', 'Hopley', 'Terese', 'Jones', 'Kantor', 'Cate', 'Keller', 'Kelly', 'Klein', 'Klockenbrink', 'Kniffen', 'Krasnor', 'Genny', 'Lane', 'Langel', 'Large', 'Kate', 'Lazar', 'Leader', 'Lee', 'Leibrock', 'Leonard', 'Levine', 'Levy', 'Lewis', 'Lilien', 'LoBalbo', 'Mac', 'Macaluso', 'Malin', 'McCarthy', 'McDaniel', 'Medhurst', 'Merrill', 'Meskers', 'Bill', 'Sanders', 'Montier', 'Moor', 'Moore', 'Spencer', 'Moss', 'Murad', 'Murdock', 'Myer', 'Neuman', 'Nicastro', 'Niemynski',  'Olesen', 'Olmsted', 'Brash', 'Pande', 'Parsons', 'Pascarella', 'Patel', 'Pecora', 'Pell', 'Perloe', 'Phelan', 'Philbin', 'Pierson', 'Popp', 'Porricelli', 'Riddle', 'Rogers', 'Rosenbaum', 'Rosenfeld', 'Rovelli', 'Rubin', 'Molly', 'Samponaro', 'Sanchez', 'Scarpelli', 'Schiro', 'Schwartz', 'Shankman', 'Snyder', 'Soler', 'Soni', 'Sprung', 'Cathy', 'Steinhart', 'Stone', 'Sulich', 'Sullivan', 'Szabo', 'Jay', 'Thakor', 'Tichio', 'Tobin', 'Dyer', 'Treibick', 'Urdang', 'Vagner', 'Van', 'Brachel', 'Voulgaris', 'Vranos', 'Walsh', 'Waters', 'Waugh', 'Weisbecker', 'West', 'Whitaker', 'Widlitz', 'Winston', 'Yarett', 'Yonce', 'Young', 'Zarrilli', 'Zorthian']
+        },
+        enron : {
+            first : ['Philip', 'John', 'Harpreet', 'Robert', 'Susan', 'Eric', 'Don', 'Sally', 'Robert', 'Lynn', 'Sandra', 'Rick', 'Larry', 'Mike', 'Michelle', 'Monika', 'Shelley', 'Sean', 'Martin', 'Jeff', 'Dana', 'Craig', 'David', 'James', 'Stacy', 'Lindy', 'Tom', 'Chris', 'Frank', 'Daren', 'Mary', 'John', 'Drew', 'Lisa', 'Randall', 'Tracy', 'Chris', 'Douglas', 'Daron', 'John', 'Michael', 'Mark', 'Mark', 'Mary', 'Steven', 'Rod', 'Marie', 'Scott', 'Juan', 'John', 'Keith', 'Stanley', 'Kevin', 'Dan', 'Tana', 'Vince', 'Steven', 'Peter', 'Kam', 'Jeff', 'Louise', 'Tori', 'John', 'Kenneth', 'Matthew', 'Andrew', 'Eric', 'Michelle', 'Teb', 'Phillip', 'Paul', 'Michael', 'Kay', 'Thomas', 'Lawrence', 'Danny', 'Mike', 'Bradley', 'Jonathan', 'Errol', 'Steven', 'Albert', 'Patrice', 'Matthew', 'Scott', 'Gerald', 'Stephanie', 'Joe', 'Susan', 'Debra', 'Vladi', 'Phillip', 'Kevin', 'Joe', 'Dutch', 'Bill', 'Jay', 'Cooper', 'Andrea', 'Richard', 'Robin', 'Benjamin', 'Kevin', 'Elizabeth', 'Eric', 'Holden', 'Monique', 'Richard', 'Diana', 'Darrell', 'Jim', 'Susan', 'Cara', 'Sara', 'Jeffrey', 'Richard', 'Hunter', 'Jeffery', 'Ryan', 'Matt', 'Geir', 'Steven', 'Theresa', 'Carol', 'James', 'Joe', 'Chris', 'Geoffery', 'Fletcher', 'Mike', 'Kate', 'Mark', 'Jane', 'Paul', 'Judy', 'Barry', 'Kim', 'Kimberly', 'Charles', 'Lawrence', 'Stacey', 'Mark', 'Jason', 'William', 'Jason', 'Paul', 'Andy', 'John'],
+            last : ['Allen', 'Arnold', 'Arora', 'Badeer', 'Bailey', 'Bass', 'Baughman', 'Beck', 'Benson', 'Blair', 'Brawner', 'Buy', 'Campbell', 'Carson', 'Cash', 'Causholli', 'Corman', 'Crandall', 'Cuilla', 'Dasovich', 'Davis', 'Dean', 'Delainey', 'Derrick', 'Dickson', 'Donoho', 'Donohoe', 'Dorland', 'Ermis', 'Farmer', 'Fischer', 'Forney', 'Fossum', 'Gang', 'Gay', 'Geaccone', 'Germany', 'Gilberth-Smith', 'Giron', 'Giffith', 'Grigsby', 'Guzman', 'Haedicke', 'Hain', 'Harris', 'Hayslett', 'Heard', 'Hendrickson', 'Hernandez', 'Hodge', 'Holst', 'Horton', 'Hyatt', 'Hyvl', 'Jones', 'Kaminski', 'Kean', 'Keavey', 'Keiser', 'King', 'Kitchen', 'Kuykendall', 'Lavorato', 'Lay', 'Lenhart', 'Lewis', 'Linder', 'Lokay', 'Lokey', 'Love', 'Lucci', 'Maggi', 'Mann', 'Martin', 'May', 'McCarty', 'McConnell', 'Mckay', 'Mckay', 'McLaughlin', 'Merriss', 'Meyers', 'Mims-Thurston', 'Motley', 'Neal', 'Nemec', 'Panus', 'Parks', 'Pereira', 'Perlingiere', 'Pimenov', 'Platter', 'Presto', 'Quenet', 'Quigley', 'Rapp', 'Reitmeyer', 'Richey', 'Ring', 'Ring', 'Rodrigue', 'Rogers', 'Ruscitti', 'Sager', 'Saibi', 'Salisbury', 'Sanchez', 'Sanders', 'Scholtes', 'Schoolcraft', 'Schwieger', 'Scott', 'Semperger', 'Shackleton', 'Shankman', 'Shapiro', 'Shively', 'Skilling', 'Slinger', 'Smith', 'Solberg', 'South', 'Staab', 'St. Clair', 'Steffes', 'Stepenovitch', 'Stokley', 'Storey', 'Sturm', 'Swerzbin', 'Symes', 'Taylor', 'Tholt', 'Thomas', 'Townsend', 'Tycholiz', 'Ward', 'Watson', 'Weldon', 'Whalley', 'White', 'Whitt', 'Williams', 'Williams', 'Wolfe', 'Zipper', 'Zufferli']
+        }, 
+        dressage : {
+            first: ['Belinda', 'Susan', 'Heather', 'Robert', 'Charlotte', 'Allison', 'Sloan', 'Robert', 'Kyra', 'Jackie', 'Jan', 'Patricia', 'Laura', 'Lendon', 'Hilda', 'Marjorie', 'Frank', 'Guy', 'Tami', 'Ashley', 'Courtney', 'Isaac', 'Carol', 'Libby', 'Adrienne', 'Anna', 'Edith', 'Debbie', 'Karen', 'Alvin', 'Dorothy', 'Leslie', 'Mikala', 'Jessica', 'Marcus', 'Hartmann', 'Annie', 'Kasey', 'Steffen', 'Lars', 'Sandy', 'Donnan', 'Michael', 'Rick', 'Jane', 'Sabine', 'Guenter', 'Lynn', 'Kate', 'Lois', 'Earl', 'Christine', 'Roxanne', 'Sarah', 'Hiram', 'Elaine', 'Lisa', 'John'],
+            last: ['Baudin', 'Blinks', 'Blitz', 'Borg', 'Bredahl', 'Brock', 'Doak', 'Dover', 'Downton', 'Ducci', 'Ebeling', 'Galvin', 'Graves', 'Gray', 'Gurney', 'Haines', 'Henry', 'Henry', 'Hoag', 'Holzer', 'King-Dye', 'Kitts', 'Lavell', 'Locke', 'Lyle', 'Marek', 'Master', 'McDonald', 'McIntosh', 'Moore', 'Morkis', 'Morse', 'Münter', 'Newberry-Ransehousen', 'Orlob', 'Pauly', 'Peavy', 'Perry-Glass', 'Peters', 'Petersen', 'Pflueger', 'Plumb', 'Poulin', 'Rockefeller-Silvia', 'Savoie', 'Schut-Kery', 'Seidel', 'Seidemann', 'Shoemaker', 'Stephens', 'Foster Thomson', 'Traurig', 'Trunnell', 'Tubman', 'Tuttle', 'Watt', 'Wilcox', 'Winnett']
+        }, 
+        declarationSigners : {
+            first: ['John', 'Josiah', 'William', 'Matthew', 'Samuel', 'John', 'Robert', 'Elbridge', 'Stephen', 'William', 'Roger', 'Samuel', 'William', 'Oliver', 'Philip', 'Francis', 'Lewis', 'Richard', 'John', 'Francis', 'John', 'Abraham', 'Robert', 'Benjamin', 'Benjamin', 'John', 'George', 'James', 'George', 'James', 'George', 'Caesar', 'George', 'Thomas', 'Samuel', 'William', 'Thomas', 'Charles', 'George', 'Richard', 'Thomas', 'Benjamin', 'Thomas', 'Francis', 'Carter', 'William', 'Joseph', 'John', 'Edward', 'Thomas', 'Thomas', 'Arthur', 'Button', 'Lyman', 'George'],
+            last: ['Hancock', 'Bartlett', 'Whipple', 'Thornton', 'Adams', 'Adams', 'Treat Paine', 'Gerry', 'Hopkins', 'Ellery', 'Sherman', 'Huntington', 'Williams', 'Wolcott', 'Livingston', 'Lewis', 'Morris', 'Stockton', 'Witherspoon', 'Hopkinson', 'Hart', 'Clark', 'Morris', 'Rush', 'Franklin', 'Morton', 'Clymer', 'Smith', 'Taylor', 'Wilson', 'Ross', 'Rodney', 'Read', 'McKean', 'Chase', 'Paca', 'Stone', 'Carroll', 'Wythe', 'Henry Lee', 'Jefferson', 'Harrison', 'Nelson,', 'Lightfoot Lee', 'Braxton', 'Hooper', 'Hewes', 'Penn', 'Rutledge', 'Heyward,', 'Lynch,', 'Middleton', 'Gwinnett', 'Hall', 'Walton'
+            ]
+        }
+    }
+
+    const fontFamily = ['Comic Sans MS', 'Arial', 'Times', 'Bodoni Moda', 'Linden Hill']
+
+    let variables = {
+        snootiness: 3,
+        format: {
+            1: "A4",
+            2: "Letter"
+        },
+        logo : {
+            letters : "DCH",
+            box: {
+                color: "red",
+                direction: "left"
+            }
+        },
+        recipientName: "Recipient Name",
+        recipientTitle: "Recipient Title",
+        recipientAddressLine1: "102 Lawyer Lane",
+        recipientAddressLine2: "Apt 39",
+        recipientAddressLine3: "Boston, MA, 02138",
+        reSubject: "Subject",
+        firmPartnersNames : ["George Dewey", "John Cheatem", "Amanda Howe"],
+        firmPartnersSource: "greenwich",
+        firmName: "Nammeeee",
+        firmYear: "1893",
+        firmFloor: 4,
+        firmAddressLine1: "5 John F. Kennedy St.",
+        firmAddressLine2: "4th Floor",
+        firmAddressLine3: "Cambridge, MA, 02138",
+        firmPhone: "123-456-7890",
+        salutation: "To whom it may concern,",
+        textBody: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        closing: "Sincerely,",
+        senderName: "Morry Kolman"   
+    }
+  </script>
+</head>
+<body>
+  <div id="main" class="main">
+    <div id="inputs" class="inputs">
+      <h1>HTML to PDF Test</h1>
+      <p>This is a test page for HTML to PDF conversion.</p>
+      <button onclick="generatePDF()">Update PDF</button>
+      <button onclick="downloadPDF()">Download PDF</button>
+      <br/>
+
+      <h4>Vibe: How snooty are you?</h4>
+      <input type="range" id="snootinessInput" min="1" max="5" value="3">
+      <h4>Firm: Who is sending this letter?</h4>
+      <br/>
+      <span># of Partners</span>
+      <input type="range" id="nameNumberInput" min="0" max="69" value="3">
+      <br/>
+      <span>Floor</span>
+      <input type="range" id="firmFloorInput" min="1" max="100" value="30">
+      <br/>
+      <span>Age of firm</span>
+      <input type="range" id="firmAgeInput" min="1" max="250" value="69">
+      <br/>
+      <span>What is the source of the names?</span>
+      <select id="nameSourceInput">
+        <option value="mayflower">Mayflower Manifest</option>
+        <option value="greenwich">Greenwich City Council</option>
+        <option value="enron">Enron Executives</option>
+        <option value="dressage">Equestrian Riders</option>
+        <option value="declarationSigners">Declaration of Independence</option>
+      </select>
+    
+      <h4>Recipient: Who are you sending this letter to?</h4>
+      <input type="text" id="recipientInput" placeholder="Recipient Name"><br/>
+      <input type="text" id="recipientTitleInput" placeholder="Recipient Title"><br/>
+      <input type="text" id="recipientAddressLine1Input" placeholder="Recipient Address Line 1"><br/>
+      <input type="text" id="recipientAddressLine2Input" placeholder="Recipient Address Line 2"><br/>
+      <input type="text" id="recipientAddressLine3Input" placeholder="Recipient Address Line 3">
+
+      <h4>Topic: What is the subject of this letter?</h4>
+      <input type="text" id="reSubjectInput" placeholder="Subject"><br/>
+      <textarea id="textBodyInput" placeholder="Letter Body"></textarea>
+
+      <div id="content" style="width: 210mm; height: 297mm; padding: 20mm; background: white; display: none">
+        <div id="pageContent" class="template1">
+
+            <header id="pageHeader" class="pageHeader">
+                <div id="firmName" class="firmName">
+                    Nammeeee
+                </div>
+                <div id="firmYear" class="firmYear"></div>
+                <div id="firmAddress" class="firmAddress">
+                    <span class="addressLine" id="firmAddressLine1">Addressssss</span>,
+                    <span class="addressLine" id="firmAddressLine2">Addressssss</span>
+                    <br/>
+                    <span class="addressLine" id="firmAddressLine3">Addressssss</span>
+                </div>
+                <div id="firmPartners" class="firmPartners">
+                </div>
+                <span id="date" class="date"></span>
+            </header>
+            <div id="recipient">
+                <p id="recipientName" class="recipientName">Recipient Name</p>
+                <p id="recipientAddress" class="recipientAddress">Recipient Address</p>
+            </div>
+            <div id="letterContent">
+                <p id="reSubject" class="reSubject"><b>Subject</b></p>
+                <p id="salutation" class="salutation">To whom it may concern,</p>
+                <p id="textBody" class="textBody"></p>
+            </div>
+            <br/>
+            <div id="letterFooter" class="letterFooter">
+                <p id="closing" class="closing">Sincerely,</p>
+                <p id="senderSignature" class="senderSignature">John Doe</p>
+                <p id="senderName" class="senderName">John Doe</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="output">
+      <img id="pdfPreview" style="width:100%">
+    </div>
+  </div>
+
+  <!-- Offscreen content for rendering -->
+  <div id="renderTarget"></div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    let addressToUse = addresses[Math.floor(Math.random() * addresses.length)];
+    variables.firmAddressLine1 = `${Math.floor(Math.random() * 10000)} ${addressToUse[0]}`;
+    variables.firmAddressLine2 = `Floor ${15 * variables.snootiness + Math.floor(Math.random() * 30 + 1)}`;
+    variables.firmAddressLine3 = `${addressToUse[1]}`;
+
+    //FORM FUNCTIONS
+
+    const generateNames = (numNames, source) => {
+        const firstNames = nameSources[source].first;
+        const lastNames = nameSources[source].last;
+
+        let nameArr = []
+        for (let i = 0; i < numNames; i++) {
+            let firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
+            let lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
+            nameArr.push(`${firstName} ${lastName}`)
+        }
+        return nameArr
+    }
+
+    variables.firmPartnersNames = generateNames(3, variables.firmPartnersSource)
+
+    const changeNumberOfNames = () => {
+        const targetNum = document.getElementById('nameNumberInput').value;
+        console.log("in changeNumberOfNames with targetNum", targetNum, "and variables.firmPartnersNames.length", variables.firmPartnersNames.length)
+        if (targetNum > variables.firmPartnersNames.length) {
+            while (variables.firmPartnersNames.length < targetNum) {
+                console.log("in while")
+                variables.firmPartnersNames.push(generateNames(1, variables.firmPartnersSource)[0])
+            }
+        } else {
+            variables.firmPartnersNames = variables.firmPartnersNames.slice(0, targetNum)
+        }
+        console.log(variables.firmPartnersNames)
+
+        
+        generatePDF()
+    }
+    
+    const changeSourceOfNames = () => {
+        const targetSource = document.getElementById('nameSourceInput').value;
+        console.log("in changeSourceOfNames with targetSource", targetSource)
+        variables.firmPartnersSource = targetSource;
+        variables.firmPartnersNames = generateNames(3, targetSource)
+        generatePDF()
+    }
+
+
+    const updateVariables = () => {
+        if (document.getElementById('reSubjectInput').value) variables.reSubject = document.getElementById('reSubjectInput').value;
+        if (document.getElementById('textBodyInput').value) variables.textBody = document.getElementById('textBodyInput').value;
+        if (document.getElementById('recipientInput').value) variables.recipientName = document.getElementById('recipientInput').value;
+        if (document.getElementById('recipientTitleInput').value) variables.recipientTitle = document.getElementById('recipientTitleInput').value;
+        if (document.getElementById('recipientAddressLine1Input').value) variables.recipientAddressLine1 = document.getElementById('recipientAddressLine1Input').value;
+        if (document.getElementById('recipientAddressLine2Input').value) variables.recipientAddressLine2 = document.getElementById('recipientAddressLine2Input').value;
+        if (document.getElementById('recipientAddressLine3Input').value) variables.recipientAddressLine3 = document.getElementById('recipientAddressLine3Input').value;
+
+        variables.snootiness = document.getElementById('snootinessInput').value;
+        variables.firmYear = new Date().getFullYear() - document.getElementById('firmAgeInput').value;
+        //firm stuff
+        variables.firmFloor = document.getElementById('firmFloorInput').value;
+        variables.firmAddressLine2 = `${variables.firmFloor}${variables.firmFloor.endsWith('11') ? 'th' : variables.firmFloor.endsWith('12') ? 'th' : variables.firmFloor.endsWith('13') ? 'th' : variables.firmFloor.endsWith('1') ? 'st' : variables.firmFloor.endsWith('2') ? 'nd' : variables.firmFloor.endsWith('3') ? 'rd' : 'th'} Floor`;
+
+        // let addressToUse = addresses[Math.floor(Math.random() * addresses.length)];
+        //update firm address
+        
+
+
+    }
+
+
+    //GENERATION FUNCTIOND
+    const makeHeader = () => {
+        //first, figure out header format
+
+        //then, make the header styling
+        const header = document.getElementById('pageHeader');
+        header.style.display = "flex"
+        header.style.flexDirection = "column"
+        header.style.justifyContent = "center"
+        header.style.alignItems = "center"
+
+
+        // make the firm name the last names of each partner
+        let firmName = variables.firmPartnersNames.reduce((acc, cur) => {return acc + cur.split(" ")[1] + ", "}, "").toUpperCase().slice(0, -2);
+        const lastCommaIndex = firmName.lastIndexOf(", ");
+        console.log("lastCommaIndex", lastCommaIndex)
+        if (lastCommaIndex !== -1) {
+            firmName = firmName.slice(0, lastCommaIndex) + " &" + firmName.slice(lastCommaIndex + 1);
+        }
+        document.getElementById('firmName').innerHTML = firmName
+        document.getElementById('firmYear').innerHTML = `<i>Est. ${variables.firmYear}</i>`;
+        const firmAddress = document.getElementById('firmAddress');        //make the firm address the address of the firm
+        document.getElementById('firmAddressLine1').innerHTML = variables.firmAddressLine1
+        document.getElementById('firmAddressLine2').innerHTML = variables.firmAddressLine2
+        document.getElementById('firmAddressLine3').innerHTML = variables.firmAddressLine3
+
+        const firmPartners = document.getElementById('firmPartners');
+        firmPartners.innerHTML = ""
+        
+        variables.firmPartnersNames.forEach(partner => {
+            const partnerDiv = document.createElement('p');
+            partnerDiv.classList.add("firmPartner")
+            partnerDiv.innerHTML = partner;
+            firmPartners.appendChild(partnerDiv);
+        })
+    }
+    
+    makeHeader();
+
+    const makeRecipient = () => {
+        const recipientAddress = document.getElementById('recipientAddress');
+        const recipientName = document.getElementById('recipientName');
+        const salutation = document.getElementById('salutation');
+
+        recipientAddress.innerHTML = variables.recipientAddressLine1 + "<br/>" + variables.recipientAddressLine2 + "<br/>" + variables.recipientAddressLine3
+        recipientName.innerHTML = variables.recipientName
+        salutation.innerHTML = variables.salutation
+    
+    }
+
+    makeRecipient();
+
+    const makeFooter = () => {
+        document.getElementById('senderSignature').innerHTML = `${variables.senderName}7`;
+        document.getElementById('senderName').innerHTML = variables.senderName;
+    }
+
+    makeFooter();
+
+    const makeBody = () => {
+        const letterContent = document.getElementById('letterContent');
+        const reSubject = document.getElementById('reSubject');
+        const salutation = document.getElementById('salutation');
+        const textBody = document.getElementById('textBody');
+
+        reSubject.innerHTML = `<b>Re: ${variables.reSubject}</b>`
+        salutation.innerHTML = variables.salutation
+        textBody.innerHTML = variables.textBody.replace(/\n/g, '<br/>')
+    }
+
+    makeBody();
+
+    // FUNCTIONS
+    async function generatePDF() {
+        updateVariables();
+        makeHeader();
+        makeRecipient();
+        makeBody();
+        makeFooter();
+
+        const content = document.getElementById('pageContent');
+
+        const container = document.querySelector('.firmPartners');
+
+        container.classList.remove('two-columns', 'three-columns', 'four-columns', 'five-columns');
+        // container.style.fontSize = '';
+
+        if (variables.firmPartnersNames.length > 50) {
+            container.style.fontSize = '9px';
+            container.classList.add('five-columns');
+        } else if (variables.firmPartnersNames.length > 36) {
+            container.style.fontSize = '9px';
+            container.classList.add('four-columns');
+        } else if (variables.firmPartnersNames.length > 20) {
+            container.style.fontSize = '10px';
+            container.classList.add('three-columns');
+        } else if (variables.firmPartnersNames.length > 10) {
+            container.style.fontSize = '10px';
+            container.classList.add('two-columns');
+        }
+      const date = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('date').textContent = date.toLocaleDateString('en-US', options);
+
+      const renderTarget = document.getElementById('renderTarget');
+      renderTarget.style.fontFamily = fontFamily[variables.snootiness - 1];
+
+      // You can dynamically update this however you like
+      renderTarget.innerHTML = document.getElementById("content").innerHTML;
+
+      const canvas = await html2canvas(renderTarget, { scale: 2 , autoPaging: 'text'});
+      let imgData = canvas.toDataURL('image/png');
+      document.getElementById('pdfPreview').src = imgData;
+
+    }
+
+    async function downloadPDF() {
+    generatePDF();
+    const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+      const canvas = await html2canvas(renderTarget, { scale: 2 });
+      let imgData = canvas.toDataURL('image/png');
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('document.pdf');
+    }
+
+    window.onload = generatePDF;
+
+    document.getElementById('snootinessInput').addEventListener('input', generatePDF);
+    document.getElementById('nameNumberInput').addEventListener('input', changeNumberOfNames);
+    document.getElementById('firmFloorInput').addEventListener('input', generatePDF);
+    document.getElementById('nameSourceInput').addEventListener('input', changeSourceOfNames);
+    document.getElementById('firmAgeInput').addEventListener('input', generatePDF);
+  </script>
+</body>
+</html>

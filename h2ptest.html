@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML to PDF Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div id="main">
+
+        <div id="inputs">
+            <h1>HTML to PDF Test</h1>
+            <p>This is a test page for HTML to PDF conversion.</p>
+            <button onclick="generatePDF()">Generate PDF</button>
+        </div>
+
+        <div id="output">
+            
+        </div>
+        
+        
+    </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    async function generatePDF() {
+        const content = "<p>Hello World</p>";
+        const canvas = await html2canvas(content, { scale: 2 });
+
+        const imgData = canvas.toDataURL('image/png');
+
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+        });
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('hello-world.pdf');
+
+    }
+  </script>
+</body>
+</html>
