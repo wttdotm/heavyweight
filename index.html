@@ -322,6 +322,56 @@
     let imageData = null;
 
 
+    const exampleRecipients = {
+        delta : {
+            recipientName: "Delta Airlines",
+            recipientAddressLine1: "1010 Delta Blvd.",
+            recipientAddressLine2: "Atlanta, GA, 30354",
+            reSubject: "Flight Refund",
+            textBody: "Complain about your flight here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        amazon : {
+            recipientName: "Amazon Services LLC",
+            recipientAddressLine1: "410 Terry Ave N",
+            recipientAddressLine2: "Seattle, WA, 98101",
+            reSubject: "Amazon Refund",
+            textBody: "Complain about your Amazon experience here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        tesla : {
+            recipientName: "Tesla HQ",
+            recipientAddressLine1: "1 Tesla Rd",
+            recipientAddressLine2: "Austin, TX, 78725",
+            reSubject: "Tesla Refund",
+            textBody: "Complain about your Tesla experience here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        }
+    ,
+    landlord : {
+        recipientName: "Ralph Mott",
+        recipientAddressLine1: "450 Harman St",
+        recipientAddressLine2: "Unit B",
+        recipientAddressLine3: "Brooklyn, New York",
+        reSubject: "Hot Water Issues at 450 Harman St",
+        textBody: "Morry Kolman resides at your property at 450 Harman St. Since April 15, 2025, Mr. Kolman's apartment has not had consistent water pressure or hot water. On many days, including but not limited to April 15, April 17, April 19, April 22, April 25, April 27, May 2, May 4, and May 5, the water coming out of Mr. Kolman's showerhead was a cold trickle.\n\nUnder New York law, you have an obligation to provide a livable, safe, and sanitary apartment. The failure to provide Mr. Kolman with hot water violates this obligation. Mr. Kolman previously notified you on April 20, 2025 of the persistent issues with the shower, but the situation has not improved.\n\nPlease send out a maintenance person to fix the issue with the hot water and water pressure immediately. Once those repairs are complete, we are willing to negotiate what percentage of rent should be discounted for the relevant period.\n\nWe look forward to your prompt reply. Mr. Kolman reserves all rights."
+    },
+    workplace : {
+        recipientName: "Karen Anderson",
+        recipientAddressLine1: "OCF Coffeehouse",
+        recipientAddressLine2: "1575 Roundhouse Road",
+        recipientAddressLine3: "San Antonio, Texas",
+        reSubject: "Wage and Hour Violations",
+        textBody: "It has come to my attention that workers at OCF Coffeehouse have not been receiving overtime pay for hours worked in excess the allowed amount. Your categorization of baristas as exempt, despite the fact that they are not salaried and make less than $40K per year is likely a violation of state and federal law. Additionally, suggesting that baristas should clock out even though they still have cleaning tasks to perform is flagrantly illegal.\n\nOCF Coffeehouse's baristas are beloved members of our local community. Jane volunteers at the animal shelter between shifts, whereas Olive is an integral part of the local aerials group. They deserve a workplace that recognizes their contributions and pays them appropriately.\n\nWe look forward to your response, including a complete list of the payments you plan to provide to each staff member. We, of course, reserve all rights."
+    },
+    client : {
+        recipientName: "[Your Client]",
+        recipientAddressLine1: "[Client address line 1]",
+        recipientAddressLine2: "[Client address line 2]",
+        recipientAddressLine3: "[Client address line 3]",
+        reSubject: "[Your Subject]",
+        textBody: "I write to you on behalf of [Your Name], who you contracted to provide freelance work. [Your Name] signed a contract with you on [Contract Date] specifying the terms of their engagement. Specifically, they would be paid [Payment Amount] for [Service Rendered].\n[Your Name] invoiced [Company] on [Invoice Date], with invoice terms of [Invoice Term]. That invoice is now past due, and [Your Name] has not received payment.\nPlease remit payment immediately. If [Company] fails to pay, [Your Name] reserves the right to pursue all legal remedies, including pursuit of any damages that have come from your failure to pay in a timely fashion."
+    }
+
+    }
+
     const addresses = [
         ['Boylston St.', 'Boston, MA, 02116'],
         ['E Wolf Point Plaza', 'Chicago, IL , 60606'],
@@ -408,7 +458,8 @@
         <br/>
         <p style="text-align: center;">Heavyweight lets you create important-looking letters in seconds.
         <br/>
-        Demand respect and get results, by commanding the look of a law firm without the price of one.</p>
+        <br/>
+        Demand respect and get results by commanding the look of authority without the price of one.</p>
         <p><a href="./about.html">Learn more</a></p>
         <div class="buttonContainer" id="buttonContainer">
             <button onclick="generatePDF()">Update PDF</button>
@@ -417,6 +468,14 @@
     </header>
     <div id="main" class="main">
     <div id="inputs" class="inputs">
+        <!-- <div id="exampleButtonContainer" class="exampleButtonContainer">
+            <select id="exampleSelect" class="exampleSelect" onchange="prefillRecipient(this.value)">
+                <option value="custom">Custom</option>
+                <option value="delta">Delta</option>
+                <option value="amazon">Amazon</option>
+                <option value="tesla">Tesla</option>
+            </select>
+        </div> -->
     <h4>Recipient: Who are you sending this letter to?</h4>
     <div id="prefillButtonContainer" class="prefillButtonContainer">
         <select id="prefillSelect" class="prefillSelect" onchange="prefillRecipient(this.value)">
@@ -424,6 +483,9 @@
             <option value="delta">Delta</option>
             <option value="amazon">Amazon</option>
             <option value="tesla">Tesla</option>
+            <option value="landlord">Landlord (example)</option>
+            <option value="workplace">Workplace (example)</option>
+            <option value="client">Overdue Client (example)</option>
         </select>
     </div>
       <input type="text" id="recipientInput" placeholder="Recipient Name"><br/>
@@ -461,13 +523,16 @@
         <option value="declarationSigners">Declaration of Independence</option>
       </select>
 
-      <h4>You: Who are they writing on behalf of?</h4>
-      <select id="userTitleInput">
-        <option value="Mr.">Mr.</option>
-        <option value="Ms.">Ms.</option>
-        <option value="Mx.">Mx.</option>
-      </select>
-      <input type="text" id="userNameInput" placeholder="Your Name"><br/>
+      <div style="display: none">
+
+          <h4>You: Who are they writing on behalf of?</h4>
+          <select id="userTitleInput">
+              <option value="Mr.">Mr.</option>
+              <option value="Ms.">Ms.</option>
+              <option value="Mx.">Mx.</option>
+            </select>
+            <input type="text" id="userNameInput" placeholder="Your Name"><br/>
+        </div>
     
 
       <button onclick="generatePDF()">Update PDF</button>
@@ -534,24 +599,56 @@
             document.getElementById('recipientAddressLine1Input').value = '';
             document.getElementById('recipientAddressLine2Input').value = '';
             document.getElementById('recipientAddressLine3Input').value = '';
+            document.getElementById('reSubjectInput').value = '';
+            document.getElementById('textBodyInput').value = '';
             break;
         case 'delta':
-            document.getElementById('recipientInput').value = 'Delta Airlines';
-            document.getElementById('recipientAddressLine1Input').value = '1010 Delta Boulevard';
-            document.getElementById('recipientAddressLine2Input').value = 'Atlanta, GA, 30354';
-            document.getElementById('recipientAddressLine3Input').value = ' ';
+            document.getElementById('recipientInput').value = exampleRecipients.delta.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.delta.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.delta.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.delta.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.delta.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.delta.textBody;
             break;
         case 'amazon':
-            document.getElementById('recipientInput').value = 'Amazon.com Services LLC';
-            document.getElementById('recipientAddressLine1Input').value = '410 Terry Ave N';
-            document.getElementById('recipientAddressLine2Input').value = 'Seattle, WA, 98109';
-            document.getElementById('recipientAddressLine3Input').value = ' ';
+            document.getElementById('recipientInput').value = exampleRecipients.amazon.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.amazon.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.amazon.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.amazon.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.amazon.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.amazon.textBody;
             break;
         case 'tesla':
-            document.getElementById('recipientInput').value = 'Tesla Headquarters';
-            document.getElementById('recipientAddressLine1Input').value = '1 Tesla Road';
-            document.getElementById('recipientAddressLine2Input').value = 'Austin, TX, 78725';
-            document.getElementById('recipientAddressLine3Input').value = ' ';
+            document.getElementById('recipientInput').value = exampleRecipients.tesla.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.tesla.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.tesla.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.tesla.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.tesla.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.tesla.textBody;
+            break;
+        case 'landlord':
+            document.getElementById('recipientInput').value = exampleRecipients.landlord.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.landlord.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.landlord.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.landlord.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.landlord.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.landlord.textBody;
+            break;
+        case 'workplace':
+            document.getElementById('recipientInput').value = exampleRecipients.workplace.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.workplace.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.workplace.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.workplace.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.workplace.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.workplace.textBody;
+            break;
+        case 'client':
+            document.getElementById('recipientInput').value = exampleRecipients.client.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.client.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.client.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.client.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.client.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.client.textBody;
             break;
         }
         generatePDF()
