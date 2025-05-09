@@ -466,7 +466,7 @@
         <p style="text-align: center;">Heavyweight lets you create important-looking letters in seconds.
         <br/>
         <br/>
-        Demand respect and get results by commanding the look of authority without the price of one.</p>
+        Demand respect and get results by commanding the look of authority, without the price of one.</p>
         <p><a href="./about.html">Learn more</a></p>
         <div class="buttonContainer" id="buttonContainer">
             <button onclick="generatePDF()">Update PDF</button>
@@ -524,7 +524,7 @@
             <br/>
       <select id="nameSourceInput">
         <option value="mayflower">Mayflower Manifest</option>
-        <option value="greenwich">Greenwich City Council</option>
+        <option value="greenwich">Greenwich, CT. Town Representatives</option>
         <option value="enron">Enron Executives</option>
         <option value="dressage">Equestrian Riders</option>
         <option value="declarationSigners">Declaration of Independence</option>
@@ -868,7 +868,7 @@
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('document.pdf');
+      pdf.save('DemandLetter_Final_2.pdf');
     }
 
     window.onload = generatePDF;
