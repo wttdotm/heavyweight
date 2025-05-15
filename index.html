@@ -334,6 +334,14 @@
 
   <script>  
 
+        //this is diy alternative to a google analytics
+      //it only logs IP (for calcultating unique views) and event type
+      //there are two event types: home page load and pdf download
+      //pls do not spam I just want to know how many ppl use my site
+      //you can view the source code at https://github.com/we-make-internet/home-page/blob/main/www/diyPixel/heavyweightPixel.php
+      fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pageView')
+
+
     let imageData = null;
 
 
@@ -881,6 +889,8 @@
       stringifiedVariables = JSON.stringify(variables);
       pdf.addMetadata(stringifiedVariables, 'variables');
       pdf.save('DemandLetter_Final_2.pdf');
+      fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pdfGenerated')
+
     }
 
     const uploadPDF = () => {
