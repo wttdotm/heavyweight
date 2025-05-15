@@ -6,6 +6,14 @@
   <title>Heavyweight: Letters Taken Seriously</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/heavyweight_favicon.png">
+  <!-- preview image -->
+  <meta property="og:title" content="Heavyweight: All of the gravitas, none of the fees">
+  <meta property="og:description" content="Generate professional-looking demand letters with style and snootiness">
+  <meta property="og:image" content="assets/heavyweight_linkpreview.png">
+  <meta property="og:url" content="https://heavyweight.cc">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/heavyweight_linkpreview.png">
 
   <!-- font imports -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -471,6 +479,7 @@
         <div class="buttonContainer" id="buttonContainer">
             <button onclick="generatePDF()">Update PDF</button>
             <button onclick="downloadPDF()">Download PDF</button>
+            <button onclick="uploadPDF()">Upload PDF</button>
         </div>
     </header>
     <div id="main" class="main">
@@ -802,6 +811,7 @@
 
         reSubject.innerHTML = `<b>Re: ${variables.reSubject}</b>`
         salutation.innerHTML = variables.salutation
+        // console.log("variables.textBody", variables.textBody)
         textBody.innerHTML = `${variables.textBody.replace(/\n/g, '<br/>')}`
     }
 
@@ -868,7 +878,61 @@
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      stringifiedVariables = JSON.stringify(variables);
+      pdf.addMetadata(stringifiedVariables, 'variables');
       pdf.save('DemandLetter_Final_2.pdf');
+    }
+
+    const uploadPDF = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/pdf';
+    input.onchange = async function() {
+        const file = this.files[0];
+        if (!file) return;
+
+        const arrayBuffer = await file.arrayBuffer();
+        const uint8Array = new Uint8Array(arrayBuffer);
+        const text = new TextDecoder().decode(uint8Array);
+
+        // Try to extract the variables metadata
+        const variablesMatch = text.match(/<jspdf:metadata>([^<]*?)<\/jspdf:metadata>/);
+        if (variablesMatch && variablesMatch[1]) {
+            try {
+                const variablesJson = JSON.parse(variablesMatch[1]);
+                // Update global variables object
+                variables = variablesJson;
+                console.log("variables", variables)
+                document.getElementById('textBodyInput').value = variables.textBody;
+                document.getElementById('firmAgeInput').value = new Date().getFullYear() - variables.firmYear;
+                document.getElementById('snootinessInput').value = variables.snootiness;
+                document.getElementById('firmFloorInput').value = variables.firmFloor;
+                document.getElementById('nameSourceInput').value = variables.firmPartnersSource;
+                document.getElementById('nameNumberInput').value = variables.firmPartnersNames.length;
+                document.getElementById('recipientAddressLine1Input').value = variables.recipientAddressLine1;
+                document.getElementById('recipientAddressLine2Input').value = variables.recipientAddressLine2;
+                document.getElementById('recipientAddressLine3Input').value = variables.recipientAddressLine3;
+                document.getElementById('recipientInput').value = variables.recipientName;
+                document.getElementById('reSubjectInput').value = variables.reSubject;
+
+                updateInputNumbers();
+                makeHeader();
+                makeRecipient();
+                makeBody();
+                makeFooter();
+
+                // Regenerate PDF with new variables
+                generatePDF();
+            } catch (e) {
+                console.error('Failed to parse variables metadata:', e);
+            }
+        } else {
+            console.log('No variables metadata found in PDF');
+        }
+    };
+    input.click();
+
+
     }
 
     window.onload = generatePDF;
