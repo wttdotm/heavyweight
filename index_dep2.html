@@ -161,37 +161,19 @@
       width: 60%;
     } */
 
-    .output {
+    #output {
         padding: 25px;
         background-color: gray;
         border-radius: 8px;
         width: 60%;
         box-shadow: 0 4px 15px rgba(0,0,0,0.25);
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: center;
-        flex-direction: column;
-        gap: 20px;
-        overflow: auto;
     }
 
-    .output::-webkit-scrollbar {
-        border-radius: 8px;
-        width: 4px;
-        padding: 10px;
-        background-color: transparent;
-    }
-
-    .output::-webkit-scrollbar-thumb {
-        background-color: lightgray;
-        width: 4px;
-        border-radius: 10px;
-    }
-
-
-    .pdfPreview {
+    #pdfPreview {
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        max-width: 100%;
     }
 
 
@@ -201,13 +183,9 @@
       left: -9999px;
       top: 0;
       width: 210mm;
-      /* height: 297mm; */
-      padding-top: 20mm;
-      padding-left: 20mm;
-      padding-right: 20mm;
-      padding-bottom: 0mm;
+      height: 297mm;
+      padding: 20mm;
       background: white;
-      margin-bottom: 0mm;
       /* font-family: Comic Sans MS, sans-serif; */
       /* font-family: Arial, sans-serif; */
         /* font-family: Times, serif; */
@@ -244,10 +222,6 @@
       font-family: signatureFont, cursive;
       font-size: 84px;
       margin: -20px;
-    }
-
-    .senderName {
-        margin-bottom: 0px;
     }
 
     .template1 {
@@ -513,7 +487,7 @@
         firmAddressLine3: "Cambridge, MA, 02138",
         firmPhone: "123-456-7890",
         salutation: "To whom it may concern,",
-        textBody: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.",
+        textBody: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         closing: "Sincerely,",
         senderName: "Morry Kolman"   
     }
@@ -644,8 +618,8 @@
       </div>
     </div>
 
-    <div id="output" class="output">
-      <img id="pdfPreview" class="pdfPreview" style="max-width:100%">
+    <div id="output">
+      <img id="pdfPreview" style="width:100%">
     </div>
   </div>
 
@@ -871,88 +845,7 @@
 
     makeBody();
 
-
-    const splitCanvasIntoPages = (canvas) => {
-        console.log("in splitCanvasIntoPages", typeof canvas)
-        console.log("Canvas methods:", Object.getOwnPropertyNames(canvas.__proto__));
-        mainCanvasContext = canvas.getContext('2d')
-        console.log("mainCanvasContext", mainCanvasContext)
-        mainCanvasImageData = mainCanvasContext.getImageData(0, 0, canvas.width, canvas.height)
-        console.log("mainCanvasImageData", mainCanvasImageData)
-        let maxIndivHeight = 2673
-        let padding = 180
-        let pageIncrement = maxIndivHeight - (padding * 2)
-        
-
-        let currentHeight = 0
-        const pages = []
-        const width = canvas.width
-        const height = canvas.height
-        // const pageHeight = 297
-        const pageHeight = 3521
-        console.log(`canvas height: ${height}\nrenderTargetHeight: ${document.getElementById('renderTarget').offsetHeight}\ncanvas width: ${width}\nrenderTargetWidth: ${document.getElementById('renderTarget').offsetWidth}`)
-
-        //starting height is 180
-        currentHeight = padding
-        let currentPage = 0
-
-        while (currentHeight < height) {
-
-            let thisIncrement = pageIncrement
-            
-            let rowStart = ((currentHeight + thisIncrement) * width * 4); // Each pixel has 4 values (r,g,b,a)
-            let rowEnd = rowStart + (width * 4);
-            let rowPixels = mainCanvasImageData.data.slice(rowStart, rowEnd);
-            let isBlack = rowPixels.some(pixel => pixel !== 255);
-            // console.log("isBlack", isBlack)
-
-            while (isBlack) {
-                thisIncrement = thisIncrement - 1
-                rowStart = ((currentHeight + thisIncrement) * width * 4); // Each pixel has 4 values (r,g,b,a)
-                rowEnd = rowStart + (width * 4);
-                rowPixels = mainCanvasImageData.data.slice(rowStart, rowEnd);
-                isBlack = rowPixels.some(pixel => pixel !== 255);
-            }
-
-
-            const page = document.createElement('canvas')
-            page.width = width
-            page.height = maxIndivHeight
-            const ctx = page.getContext('2d')
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, width, maxIndivHeight);
-
-            if (currentPage === 0) {
-                ctx.drawImage(
-                    canvas,
-                    0, 0,  // Source x, y
-                    width, thisIncrement + padding,  // Source width, height
-                    0, 0,  // Destination x, y 
-                    width, thisIncrement + padding   // Destination width, height
-                )
-            } else {
-                ctx.drawImage(
-                    canvas,
-                    0, currentHeight,  // Source x, y
-                    width, thisIncrement,  // Source width, height
-                    0, 180,  // Destination x, y 
-                    width, thisIncrement   // Destination width, height
-                )
-            }
-
-            pages.push(page)
-            currentHeight += thisIncrement
-            currentPage += 1
-        }
-
-
-        return pages
-    }
-
-
     // FUNCTIONS
-
-
     async function generatePDF() {
         updateVariables();
         updateInputNumbers();
@@ -992,34 +885,9 @@
       renderTarget.innerHTML = document.getElementById("content").innerHTML;
 
       const canvas = await html2canvas(renderTarget, { scale: 2 , autoPaging: 'text'});
-
-      const pages = splitCanvasIntoPages(canvas)
-
-      //clear the output container
-      document.getElementById('output').innerHTML = ""
-      
-      //add the pages to the output container
-      pages.forEach((page, index) => {
-        console.log("page", page)
-
-        let imgData = page.toDataURL('image/png');
-        // make a new image element with the pdfPreview class
-        const newImage = document.createElement('img');
-        newImage.classList.add('pdfPreview');
-        newImage.src = imgData;
-        // if (index === 0) {
-        //     newImage.classList.add('firstPage')
-        //     newImage.onload = () => {
-        //         console.log("newImage", newImage.)
-        //         setPreviewMaxHeight(Math.max(newImage.height, document.getElementById('inputs').offsetHeight))
-        //     }
-        // }
-        //append the new image to the output container
-        document.getElementById('output').appendChild(newImage);
-
-      })
-
-
+      let imgData = canvas.toDataURL('image/png');
+      document.getElementById('pdfPreview').src = imgData;
+      document.getElementById('textBodyInput').value = variables.textBody;
 
     }
 
@@ -1030,25 +898,14 @@
             unit: 'mm',
             format: 'a4'
         });
-        
 
       const canvas = await html2canvas(renderTarget, { scale: 2 });
-      const pages = splitCanvasIntoPages(canvas)
+      let imgData = canvas.toDataURL('image/png');
 
-      pages.forEach((page, index) => {
-        //add the page to the pdf
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (page.height * pdfWidth) / page.width;
-        let imgData = page.toDataURL('image/png');
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        if (index < pages.length - 1) {
-            pdf.addPage();
-        }
-      })
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-
-
-    //   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       stringifiedVariables = JSON.stringify(variables);
       pdf.addMetadata(stringifiedVariables, 'variables');
       pdf.save('DemandLetter_Final_2.pdf');
@@ -1108,25 +965,12 @@
 
     }
 
+    window.onload = generatePDF;
 
-    //PAGE SETUP STUFF
-    const setPreviewMaxHeight = () => {
-        const inputs = document.getElementById('inputs');
-        const height = inputs.offsetHeight;
-        const preview = document.getElementById('output');
-        preview.style.maxHeight = `${height + 20}px`;
-        preview.style.height = `${height + 20}px`
-        preview.style.overflow = "auto"
-    }
-
-
-    window.onload = () => {generatePDF(); setPreviewMaxHeight()};
-
-
-    document.getElementById('snootinessInput').addEventListener('change', generatePDF);
-    document.getElementById('nameNumberInput').addEventListener('change', changeNumberOfNames);
+    document.getElementById('snootinessInput').addEventListener('input', generatePDF);
+    document.getElementById('nameNumberInput').addEventListener('input', changeNumberOfNames);
     document.getElementById('firmFloorInput').addEventListener('change', generatePDF);
-    document.getElementById('nameSourceInput').addEventListener('change', changeSourceOfNames);
+    document.getElementById('nameSourceInput').addEventListener('input', changeSourceOfNames);
     document.getElementById('firmAgeInput').addEventListener('change', generatePDF);
     // listen to all text inputs and generatePDF when they change
     document.querySelectorAll('input[type="text"]').forEach(input => {

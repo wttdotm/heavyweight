@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF XMP Metadata Viewer</title>
+</head>
+<body>
+  <h1>PDF XMP Metadata Viewer</h1>
+  <input type="file" id="pdfInput" accept="application/pdf">
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('pdfInput').addEventListener('change', async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const arrayBuffer = await file.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      const text = new TextDecoder().decode(uint8Array);
+
+      // Try to extract the XMP metadata block
+      const xmpStart = text.indexOf('<x:xmpmeta');
+      const xmpEnd = text.indexOf('</x:xmpmeta>');
+      // Check for variables metadata in RDF format
+      const variablesMatch = text.match(/<jspdf:metadata>([^<]*?)<\/jspdf:metadata>/);
+      if (variablesMatch && variablesMatch[1]) {
+        try {
+          const variablesJson = JSON.parse(variablesMatch[1]);
+          console.log('Variables metadata found:', variablesJson);
+        } catch (e) {
+          console.error('Failed to parse variables metadata as JSON:', e);
+        }
+      }
+
+      if (xmpStart !== -1 && xmpEnd !== -1) {
+        const xmpData = text.substring(xmpStart, xmpEnd + 12); // 12 = length of '</x:xmpmeta>'
+        document.getElementById('output').textContent = xmpData;
+      } else {
+        document.getElementById('output').textContent = 'No XMP metadata found in the PDF.';
+      }
+    });
+  </script>
+</body>
+</html>
