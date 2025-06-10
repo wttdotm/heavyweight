@@ -192,11 +192,8 @@
 
 
     .pdfPreview {
-        display: block;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         max-width: 100%;
-        height: auto;
-        width: 100%;
-        object-fit: contain;
     }
 
 
@@ -351,51 +348,15 @@
     @media only screen and (max-width: 900px) {
         #main {
             flex-direction: column;
-            align-items: center;
+            /* flex-direction: column-reverse; */
         }
-
-        #inputs,
+        #inputs {
+            width: 90%;
+        }
         #output {
-            width: 95% !important;
-            max-width: 600px;
+            width: 90%;
         }
-
-        #output {
-            max-height: none !important;
-            height: none !important;
-        }   
-
-        #renderTarget .template1 {
-            font-size: 12px !important;
-            line-height: 1.2 !important;
-        }
-
-        
-        #renderTarget .template1 .firmName {
-            font-size: 20px !important;
-        }
-        
-        #renderTarget .template1 .firmAddress,
-        #renderTarget .template1 .firmYear,
-        #renderTarget .template1 .firmPartners,
-        #renderTarget .template1 .date {
-            font-size: 16px !important;
-        }
-
-        #renderTarget .template1 .firmPartners.two-columns,
-        #renderTarget .template1 .firmPartners.three-columns,
-        #renderTarget .template1 .firmPartners.four-columns,
-        #renderTarget .template1 .firmPartners.five-columns {
-            font-size: 10px !important;
-        }
-        
-
-        #renderTarget .senderSignature {
-            margin-top: 15px;
-            font-size: 64px !important;
-        }
-
-        }
+    }
 
     
   </style>
@@ -522,7 +483,7 @@
         }
     }
 
-    const fontFamily = ['Comic Neue', 'Arial', 'Times', 'Bodoni Moda', 'Linden Hill']
+    const fontFamily = ['Comic Sans MS', 'Arial', 'Times', 'Bodoni Moda', 'Linden Hill']
 
     let variables = {
         snootiness: 3,
@@ -1044,7 +1005,7 @@
       pages.forEach((page, index) => {
         console.log("page", page)
 
-        let imgData = page.toDataURL('image/jpeg', 1);
+        let imgData = page.toDataURL('image/png');
         // make a new image element with the pdfPreview class
         const newImage = document.createElement('img');
         newImage.classList.add('pdfPreview');
@@ -1081,8 +1042,8 @@
         //add the page to the pdf
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (page.height * pdfWidth) / page.width;
-        let imgData = page.toDataURL('image/jpeg', 1);
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        let imgData = page.toDataURL('image/png');
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         if (index < pages.length - 1) {
             pdf.addPage();
         }
@@ -1156,14 +1117,9 @@
         const inputs = document.getElementById('inputs');
         const height = inputs.offsetHeight;
         const preview = document.getElementById('output');
-        if (window.innerWidth > 900) {
-            preview.style.maxHeight = `${height + 20}px`;
-            preview.style.height = `${height + 20}px`;
-            preview.style.overflow = "auto";
-        }
-        // preview.style.maxHeight = `${height + 20}px`;
-        // preview.style.height = `${height + 20}px`
-        // preview.style.overflow = "auto"
+        preview.style.maxHeight = `${height + 20}px`;
+        preview.style.height = `${height + 20}px`
+        preview.style.overflow = "auto"
     }
 
 
