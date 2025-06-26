@@ -412,6 +412,7 @@
 
     let imageData = null;
 
+    let firstLoad = true;
 
     const exampleRecipients = {
         delta : {
@@ -996,6 +997,8 @@
 
 
     async function generatePDF() {
+
+        
         updateVariables();
         updateInputNumbers();
         makeHeader();
@@ -1060,6 +1063,28 @@
         document.getElementById('output').appendChild(newImage);
 
       })
+
+      if (firstLoad) {
+        firstLoad = false;
+        lockPreviewHeightOnce();
+      }
+
+      function lockPreviewHeightOnce () {
+        const out = document.getElementById('output');
+        const firstImg = out.querySelector('img');
+        if (!firstImg) return;   // safety guard
+
+        const setMinHeight = () => {
+            out.style.minHeight = `${out.offsetHeight}px`;
+        };
+
+        if (firstImg.complete) {
+            // came from cache – onload won’t fire
+            setMinHeight();
+        } else {
+            firstImg.onload = setMinHeight;
+        }
+    }
 
 
 
@@ -1182,6 +1207,8 @@
     document.querySelectorAll('textarea').forEach(textarea => {
         textarea.addEventListener('input', generatePDF);
     });
+
+
   </script>
 </body>
 </html>
