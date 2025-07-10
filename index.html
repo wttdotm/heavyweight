@@ -598,7 +598,7 @@
             <option value="landlord">Landlord Repair Request (example)</option>
             <option value="workplace">Workplace (example)</option>
             <option value="client">Overdue Client (Generic Template)</option>
-            <option value="client">Security Deposit Request (Generic Template)</option>
+            <option value="securityDeposit">Security Deposit Request (Generic Template)</option>
         </select>
     </div>
       <input type="text" id="recipientInput" placeholder="Recipient Name"><br/>
@@ -762,6 +762,14 @@
             document.getElementById('recipientAddressLine3Input').value = exampleRecipients.client.recipientAddressLine3;
             document.getElementById('reSubjectInput').value = exampleRecipients.client.reSubject;
             document.getElementById('textBodyInput').value = exampleRecipients.client.textBody;
+            break;
+        case 'securityDeposit':
+            document.getElementById('recipientInput').value = exampleRecipients.securityDeposit.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.securityDeposit.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.securityDeposit.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.securityDeposit.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.securityDeposit.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.securityDeposit.textBody;
             break;
         }
         generatePDF()
