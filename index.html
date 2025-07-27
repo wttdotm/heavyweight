@@ -7,7 +7,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="icon" type="image/png" href="assets/heavyweight_favicon.png">
-  <!-- Vorschau-Bild -->
   <meta property="og:title" content="Heavyweight: Briefe, die ernst genommen werden - Kostenloser & Offener Generator für juristische Briefköpfe">
   <meta property="og:description" content="Erstellen Sie professionelle Forderungsschreiben mit Stil und Ernsthaftigkeit">
   <meta property="og:image" content="./assets/heavyweight_linkpreview.png">
@@ -17,24 +16,17 @@
   <meta name="author" content="Morry 'WTTDOTM' Kolman & Kendra Albert">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Heavyweight">
-  
-
-  <!-- Schriftarten -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Linden+Hill:ital@0;1&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
-
-
   <style>
-
     body {
         font-family: 'Noto Sans', sans-serif;
         margin: 0;
         padding: 20px;
         background-color: #f5f7fa;
         color: #333;
-        /* line-height: 1.6; */
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -54,13 +46,6 @@
         width: fit-content;
     }
 
-
-    /* #main {
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-    } */
-
     #main {
         display: flex;
         padding: 20px;
@@ -68,9 +53,6 @@
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-
-    
 
     button {
         background-color: #3f51b5;
@@ -149,8 +131,6 @@
         background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233f51b5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 10px center;
-        /* background-size: 16px; */
-        /* padding-right: 40px; */
         width: 90%;
     }
 
@@ -159,13 +139,6 @@
         margin: 10px 0 20px 0;
         accent-color: #3f51b5;
     }
-
-
-    /* #output {
-      padding: 20px;
-      background-color: gray;
-      width: 60%;
-    } */
 
     .output {
         padding: 25px;
@@ -194,7 +167,6 @@
         border-radius: 10px;
     }
 
-
     .pdfPreview {
         display: block;
         max-width: 100%;
@@ -203,51 +175,23 @@
         object-fit: contain;
     }
 
-
-    
     #renderTarget {
       position: absolute;
       left: -9999px;
       top: 0;
       width: 210mm;
-      /* height: 297mm; */
       padding-top: 20mm;
       padding-left: 20mm;
       padding-right: 20mm;
       padding-bottom: 0mm;
       background: white;
       margin-bottom: 0mm;
-      /* font-family: Comic Sans MS, sans-serif; */
-      /* font-family: Arial, sans-serif; */
-        /* font-family: Times, serif; */
-      /* font-family: Bodoni Moda, serif; */
-      /* font-family: Linden Hill, serif; */
-      /* TEST STUFF */
-      /* border: 1px solid red; */
     }
-
-    /* #renderTarget p {
-      color: red;
-    }
-
-    #renderTarget div {
-      border: 1px solid red;
-    }
-
-    #renderTarget header {
-      border: 1px solid blue;
-    } */
-
-
-    /* template styling */
 
     @font-face {
         font-family: signatureFont;
         src: url("assets/signaturefont.ttf");
     }
-
-    
-
 
     .senderSignature {
       font-family: signatureFont, cursive;
@@ -260,8 +204,6 @@
     }
 
     .template1 {
-      /* border: 1px solid green; */
-      /* font-family: 'Times New Roman', Times, serif; */
       font-size: 18px;
     }
 
@@ -274,27 +216,16 @@
         text-align: center;
     }
     .template1 .firmAddress {
-        /* border: 1px solid yellow; */
         text-align: center;
         align-items: center;
         margin-bottom: 10px;
-
     }
 
     .template1 .addressLine {
       margin: 0;
     }
-    
-    /* .template1 .firmPartners {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-self: flex-end;
-        gap: 0px 40px;
-    }
- */
 
- .template1 .firmPartners {
+    .template1 .firmPartners {
         display: flex;
         flex-direction: column;
         align-self: flex-end;
@@ -342,7 +273,7 @@
         margin-top: 10px;
       align-self: flex-end;
     }
-    
+
     .template1 .letterFooter {
       margin-top: 10px;
       align-self: flex-end;
@@ -374,11 +305,10 @@
             line-height: 1.2 !important;
         }
 
-        
         #renderTarget .template1 .firmName {
             font-size: 20px !important;
         }
-        
+
         #renderTarget .template1 .firmAddress,
         #renderTarget .template1 .firmYear,
         #renderTarget .template1 .firmPartners,
@@ -392,34 +322,21 @@
         #renderTarget .template1 .firmPartners.five-columns {
             font-size: 10px !important;
         }
-        
 
         #renderTarget .senderSignature {
             margin-top: 15px;
             font-size: 64px !important;
         }
-
-        }
-
-    
+    }
   </style>
 
   <script>  
-
-        //this is diy alternative to a google analytics
-      //it only logs IP (for calcultating unique views) and event type
-      //there are two event types: home page load and pdf download
-      //pls do not spam I just want to know how many ppl use my site
-      //you can view the source code at https://github.com/we-make-internet/home-page/blob/main/www/diyPixel/heavyweightPixel.php
-      fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pageView')
-
-
-    let imageData = null;
+      fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pageView');
 
     let firstLoad = true;
 
     const exampleRecipients = {
-        lufthansa : {
+        lufthansa: {
             recipientName: "Lufthansa Airlines",
             recipientAddressLine1: "Lufthansa Aviation Center",
             recipientAddressLine2: "60546 Frankfurt am Main",
@@ -427,7 +344,7 @@
             reSubject: "Flugerstattung",
             textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen, um ein Anliegen zu besprechen, das Ihre Aufmerksamkeit erfordert. Bitte prüfen Sie die Details sorgfältig und teilen Sie mir Ihre Rückmeldung mit.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        amazon : {
+        amazon: {
             recipientName: "Amazon Deutschland Services GmbH",
             recipientAddressLine1: "Domagkstraße 28",
             recipientAddressLine2: "80807 München",
@@ -435,7 +352,7 @@
             reSubject: "Amazon-Erstattung",
             textBody: "Sehr geehrte Damen und Herren,\n\nIch möchte mich über eine Angelegenheit beschweren, die Ihre sofortige Aufmerksamkeit erfordert. Es ist von größter Bedeutung, dass dieses Problem umgehend gelöst wird, um weitere Unannehmlichkeiten zu vermeiden. Ich bitte Sie, die notwendigen Maßnahmen zu ergreifen und mich über den Fortschritt zu informieren.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        tesla : {
+        tesla: {
             recipientName: "Tesla Deutschland GmbH",
             recipientAddressLine1: "Blumenstraße 17",
             recipientAddressLine2: "80331 München",
@@ -443,39 +360,39 @@
             reSubject: "Tesla-Erstattung",
             textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen, um eine Rückerstattung für eine kürzlich getätigte Transaktion zu beantragen. Die Details der Transaktion sind wie folgt: [Details einfügen]. Ich bitte Sie, die Rückerstattung so schnell wie möglich zu bearbeiten und mich über den Status zu informieren.\n\nVielen Dank für Ihre Unterstützung.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        landlord : {
+        landlord: {
             recipientName: "Greta Vermieter",
             recipientAddressLine1: "Musterstraße 12",
             recipientAddressLine2: "2. Etage",
             recipientAddressLine3: "10115 Berlin",
             reSubject: "Warmwasserprobleme in der Musterstraße 12",
-            textBody: "Sehr geehrte Damen und Herren,\n\nIch möchte Sie darauf hinweisen, dass es in meiner Wohnung seit einiger Zeit erhebliche Probleme mit der Wasserversorgung gibt. Trotz mehrfacher Meldungen wurde das Problem bisher nicht behoben. Ich fordere Sie hiermit auf, die notwendigen Reparaturen unverzüglich durchzuführen, um die Situation zu verbessern.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch möchte Sie darauf hinweisen, dass es in meiner Wohnung seit einiger Zeit erhebliche Probleme mit der Wasserversorgung gibt. Trotz mehrfacher Meldungen wurde das Problem bisher nicht behoben. Ich fordere Sie hiermit auf, die notwendigen Reparaturen unverzüglich durchzuführen, um die Situation zu verbessern.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        workplace : {
+        workplace: {
             recipientName: "Frau Meier",
             recipientAddressLine1: "Kaffeebar GmbH",
             recipientAddressLine2: "Hauptstraße 45",
             recipientAddressLine3: "50667 Köln",
             reSubject: "Verstöße gegen Arbeitszeitgesetze",
-            textBody: "Sehr geehrte Damen und Herren,\n\nEs ist mir aufgefallen, dass es in Ihrem Unternehmen zu Verstößen gegen geltende Arbeitsgesetze kommt. Ich fordere Sie auf, diese Verstöße umgehend zu beheben und sicherzustellen, dass alle Mitarbeiter fair und rechtmäßig behandelt werden. Bitte informieren Sie mich über die Maßnahmen, die Sie ergreifen werden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+            textBody: "Sehr geehrte Damen und Herren,\n\nEs ist mir aufgefallen, dass es in Ihrem Unternehmen zu Verstößen gegen geltende Arbeitsgesetze kommt. Ich fordere Sie auf, diese Verstöße umgehend zu beheben und sicherzustellen, dass alle Mitarbeiter fair und rechtmäßig behandelt werden. Bitte informieren Sie mich über die Maßnahmen, die Sie ergreifen werden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        client : {
+        client: {
             recipientName: "[Ihr Kunde]",
             recipientAddressLine1: "[Kundenadresse Zeile 1]",
             recipientAddressLine2: "[Kundenadresse Zeile 2]",
             recipientAddressLine3: "[Kundenadresse Zeile 3]",
             reSubject: "[Ihr Betreff]",
-            textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen im Namen von [Ihr Name], der Sie beauftragt hat, eine Dienstleistung zu erbringen. Leider wurde die vereinbarte Zahlung bisher nicht geleistet. Ich fordere Sie auf, die ausstehende Zahlung umgehend zu begleichen, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen im Namen von [Ihr Name], der Sie beauftragt hat, eine Dienstleistung zu erbringen. Leider wurde die vereinbarte Zahlung bisher nicht geleistet. Ich fordere Sie auf, die ausstehende Zahlung umgehend zu begleichen, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
-        securityDeposit : {
+        securityDeposit: {
             recipientName: "[Ihr Vermieter]",
             recipientAddressLine1: "[Vermieteradresse Zeile 1]",
             recipientAddressLine2: "[Vermieteradresse Zeile 2]",
             recipientAddressLine3: "[Vermieteradresse Zeile 3]",
             reSubject: "Kaution Rückforderung",
-            textBody: "Sehr geehrte Damen und Herren,\n\nIch fordere hiermit die Rückgabe meiner Kaution in Höhe von €[Betrag] für die Immobilie in [Adresse], die ich am [Datum] verlassen habe. Bitte überweisen Sie den Betrag innerhalb von 7 Tagen auf mein Konto, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch fordere hiermit die Rückgabe meiner Kaution in Höhe von €[Betrag] für die Immobilie in [Adresse], die ich am [Datum] verlassen habe. Bitte überweisen Sie den Betrag innerhalb von 7 Tagen auf mein Konto, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         }
-    }
+    };
 
     const addresses = [
         ['Musterstraße', '10115 Berlin'],
@@ -491,16 +408,16 @@
         ['Neuer Wall', '20354 Hamburg'],
         ['Kärntner Straße', '1010 Wien'],
         ['Getreidegasse', '5020 Salzburg']
-    ]
+    ];
 
     const nameSources = {
-        german : {
+        german: {
             first: ['Hans', 'Peter', 'Klaus', 'Wolfgang', 'Ursula', 'Heidi', 'Friedrich', 'Johann', 'Gisela', 'Monika', 'Stefan', 'Martina', 'Thomas', 'Sabine', 'Karl', 'Helmut', 'Anja', 'Jürgen', 'Claudia', 'Rainer'],
             last: ['Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann', 'Koch', 'Bauer', 'Richter', 'Klein', 'Wolf', 'Schröder', 'Neumann', 'Schwarz', 'Zimmermann', 'Braun']
         }
-    }
+    };
 
-    const fontFamily = ['Comic Neue', 'Arial', 'Times', 'Bodoni Moda', 'Linden Hill']
+    const fontFamily = ['Comic Neue', 'Arial', 'Times', 'Bodoni Moda', 'Linden Hill'];
 
     let variables = {
         snootiness: 3,
@@ -508,8 +425,8 @@
             1: "A4",
             2: "Letter"
         },
-        logo : {
-            letters : "DCH",
+        logo: {
+            letters: "DCH",
             box: {
                 color: "red",
                 direction: "left"
@@ -523,7 +440,7 @@
         recipientAddressLine2: "Wohnung 39",
         recipientAddressLine3: "Cambridge, MA, 02138",
         reSubject: "Betreff",
-        firmPartnersNames : ["George Dewey", "John Cheatem", "Amanda Howe"],
+        firmPartnersNames: ["George Dewey", "John Cheatem", "Amanda Howe"],
         firmPartnersSource: "german",
         firmName: "Nammeeee",
         firmYear: "1893",
@@ -536,7 +453,7 @@
         textBody: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         closing: "Mit freundlichen Grüßen,",
         senderName: "Morry Kolman"   
-    }
+    };
   </script>
 </head>
 <body>
@@ -557,14 +474,6 @@
     </header>
     <div id="main" class="main">
     <div id="inputs" class="inputs">
-        <!-- <div id="exampleButtonContainer" class="exampleButtonContainer">
-            <select id="exampleSelect" class="exampleSelect" onchange="prefillRecipient(this.value)">
-                <option value="custom">Benutzerdefiniert</option>
-                <option value="delta">Delta</option>
-                <option value="amazon">Amazon</option>
-                <option value="tesla">Tesla</option>
-            </select>
-        </div> -->
     <h4>Empfänger: An wen senden Sie diesen Brief?</h4>
     <div id="prefillButtonContainer" class="prefillButtonContainer">
         <select id="prefillSelect" class="prefillSelect" onchange="prefillRecipient(this.value)">
@@ -579,7 +488,6 @@
         </select>
     </div>
       <input type="text" id="recipientInput" placeholder="Empfängername"><br/>
-      <!-- <input type="text" id="recipientTitleInput" placeholder="Empfängertitel"><br/> -->
       <input type="text" id="recipientAddressLine1Input" placeholder="Empfängeradresse Zeile 1"><br/>
       <input type="text" id="recipientAddressLine2Input" placeholder="Empfängeradresse Zeile 2"><br/>
       <input type="text" id="recipientAddressLine3Input" placeholder="Empfängeradresse Zeile 3">
@@ -615,7 +523,6 @@
       </select>
 
       <div style="display: none">
-
           <h4>Sie: In wessen Namen schreiben sie?</h4>
           <select id="userTitleInput">
               <option value="Herr">Herr</option>
@@ -624,13 +531,10 @@
             </select>
             <input type="text" id="userNameInput" placeholder="Ihr Name"><br/>
         </div>
-    
-
       <button onclick="generatePDF()">PDF aktualisieren</button>
 
       <div id="content" style="width: 210mm; height: 297mm; padding: 20mm; background: white; display: none">
         <div id="pageContent" class="template1">
-
             <header id="pageHeader" class="pageHeader">
                 <div id="firmName" class="firmName">
                     Nammeeee
@@ -670,7 +574,6 @@
     </div>
   </div>
 
-  <!-- Offscreen content for rendering -->
   <div id="renderTarget"></div>
 
   <script>
@@ -680,8 +583,6 @@
     variables.firmAddressLine1 = `${Math.floor(Math.random() * 10000)} ${addressToUse[0]}`;
     variables.firmAddressLine2 = `Etage ${15 * variables.snootiness + Math.floor(Math.random() * 30 + 1)}`;
     variables.firmAddressLine3 = `${addressToUse[1]}`;
-
-    //FORM FUNCTIONS
 
     const prefillRecipient = (source) => {
         switch(source) {
@@ -750,59 +651,50 @@
             document.getElementById('textBodyInput').value = exampleRecipients.securityDeposit.textBody;
             break;
         }
-        generatePDF()
-
-    }
-
+        generatePDF();
+    };
 
     const generateNames = (numNames, source) => {
         const firstNames = nameSources[source].first;
         const lastNames = nameSources[source].last;
 
-        let nameArr = []
+        let nameArr = [];
         for (let i = 0; i < numNames; i++) {
-            let firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
-            let lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
-            nameArr.push(`${firstName} ${lastName}`)
+            let firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            let lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            nameArr.push(`${firstName} ${lastName}`);
         }
         variables.senderName = nameArr[Math.floor(Math.random() * nameArr.length)];
-        return nameArr
-    }
+        return nameArr;
+    };
 
-    variables.firmPartnersNames = generateNames(3, variables.firmPartnersSource)
+    variables.firmPartnersNames = generateNames(3, variables.firmPartnersSource);
 
     const changeNumberOfNames = () => {
         const targetNum = document.getElementById('nameNumberInput').value;
-        console.log("in changeNumberOfNames with targetNum", targetNum, "and variables.firmPartnersNames.length", variables.firmPartnersNames.length)
         if (targetNum > variables.firmPartnersNames.length) {
             while (variables.firmPartnersNames.length < targetNum) {
-                console.log("in while")
-                variables.firmPartnersNames.push(generateNames(1, variables.firmPartnersSource)[0])
+                variables.firmPartnersNames.push(generateNames(1, variables.firmPartnersSource)[0]);
             }
         } else {
-            variables.firmPartnersNames = variables.firmPartnersNames.slice(0, targetNum)
+            variables.firmPartnersNames = variables.firmPartnersNames.slice(0, targetNum);
         }
-        console.log(variables.firmPartnersNames)
         variables.senderName = variables.firmPartnersNames[Math.floor(Math.random() * variables.firmPartnersNames.length)];
-        
-        generatePDF()
-    }
+        generatePDF();
+    };
     
     const changeSourceOfNames = () => {
         const targetSource = document.getElementById('nameSourceInput').value;
-        console.log("in changeSourceOfNames with targetSource", targetSource)
         variables.firmPartnersSource = targetSource;
-        variables.firmPartnersNames = generateNames(variables.firmPartnersNames.length, targetSource)
+        variables.firmPartnersNames = generateNames(variables.firmPartnersNames.length, targetSource);
         variables.senderName = variables.firmPartnersNames[Math.floor(Math.random() * variables.firmPartnersNames.length)];
-        generatePDF()
-    }
-
+        generatePDF();
+    };
 
     const updateVariables = () => {
         if (document.getElementById('reSubjectInput').value) variables.reSubject = document.getElementById('reSubjectInput').value;
         if (document.getElementById('textBodyInput').value) variables.textBody = document.getElementById('textBodyInput').value;
         if (document.getElementById('recipientInput').value) variables.recipientName = document.getElementById('recipientInput').value;
-        // if (document.getElementById('recipientTitleInput').value) variables.recipientTitle = document.getElementById('recipientTitleInput').value;
         if (document.getElementById('recipientAddressLine1Input').value) variables.recipientAddressLine1 = document.getElementById('recipientAddressLine1Input').value;
         if (document.getElementById('recipientAddressLine2Input').value) variables.recipientAddressLine2 = document.getElementById('recipientAddressLine2Input').value;
         if (document.getElementById('recipientAddressLine3Input').value) variables.recipientAddressLine3 = document.getElementById('recipientAddressLine3Input').value;
@@ -811,58 +703,45 @@
 
         variables.snootiness = document.getElementById('snootinessInput').value;
         variables.firmYear = new Date().getFullYear() - document.getElementById('firmAgeInput').value;
-        //firm stuff
         variables.firmFloor = document.getElementById('firmFloorInput').value;
         variables.firmAddressLine2 = `${variables.firmFloor}${variables.firmFloor.endsWith('11') ? 'th' : variables.firmFloor.endsWith('12') ? 'th' : variables.firmFloor.endsWith('13') ? 'th' : variables.firmFloor.endsWith('1') ? 'st' : variables.firmFloor.endsWith('2') ? 'nd' : variables.firmFloor.endsWith('3') ? 'rd' : 'th'} Etage`;
-        // let addressToUse = addresses[Math.floor(Math.random() * addresses.length)];
-        //update firm address
-        
-
-
-    }
+    };
 
     const updateInputNumbers = () => {
         document.getElementById('snootinessNumber').innerHTML = variables.snootiness;
         document.getElementById('nameNumberNumber').innerHTML = variables.firmPartnersNames.length;
         document.getElementById('firmFloorNumber').innerHTML = variables.firmAddressLine2;
         document.getElementById('firmAgeNumber').innerHTML = `${document.getElementById('firmAgeInput').value} Jahre`;
-    }
-    //GENERATION FUNCTIOND
+    };
+
     const makeHeader = () => {
-        //first, figure out header format
-
-        //then, make the header styling
         const header = document.getElementById('pageHeader');
-        header.style.display = "flex"
-        header.style.flexDirection = "column"
-        header.style.justifyContent = "center"
-        header.style.alignItems = "center"
+        header.style.display = "flex";
+        header.style.flexDirection = "column";
+        header.style.justifyContent = "center";
+        header.style.alignItems = "center";
 
-
-        // make the firm name the last names of each partner
         let firmName = variables.firmPartnersNames.reduce((acc, cur) => {return acc + cur.split(" ")[1] + ", "}, "").toUpperCase().slice(0, -2);
         const lastCommaIndex = firmName.lastIndexOf(", ");
-        console.log("lastCommaIndex", lastCommaIndex)
         if (lastCommaIndex !== -1) {
             firmName = firmName.slice(0, lastCommaIndex) + " &" + firmName.slice(lastCommaIndex + 1);
         }
-        document.getElementById('firmName').innerHTML = firmName
+        document.getElementById('firmName').innerHTML = firmName;
         document.getElementById('firmYear').innerHTML = `<i>Gegr. ${variables.firmYear}</i>`;
-        const firmAddress = document.getElementById('firmAddress');        //make the firm address the address of the firm
-        document.getElementById('firmAddressLine1').innerHTML = variables.firmAddressLine1
-        document.getElementById('firmAddressLine2').innerHTML = variables.firmAddressLine2
-        document.getElementById('firmAddressLine3').innerHTML = variables.firmAddressLine3
+        document.getElementById('firmAddressLine1').innerHTML = variables.firmAddressLine1;
+        document.getElementById('firmAddressLine2').innerHTML = variables.firmAddressLine2;
+        document.getElementById('firmAddressLine3').innerHTML = variables.firmAddressLine3;
 
         const firmPartners = document.getElementById('firmPartners');
-        firmPartners.innerHTML = ""
+        firmPartners.innerHTML = "";
         
         variables.firmPartnersNames.forEach(partner => {
             const partnerDiv = document.createElement('p');
-            partnerDiv.classList.add("firmPartner")
+            partnerDiv.classList.add("firmPartner");
             partnerDiv.innerHTML = partner;
             firmPartners.appendChild(partnerDiv);
-        })
-    }
+        });
+    };
     
     makeHeader();
 
@@ -871,120 +750,93 @@
         const recipientName = document.getElementById('recipientName');
         const salutation = document.getElementById('salutation');
 
-        recipientAddress.innerHTML = variables.recipientAddressLine1 + "<br/>" + variables.recipientAddressLine2 + "<br/>" + variables.recipientAddressLine3
-        recipientName.innerHTML = variables.recipientName
-        salutation.innerHTML = variables.salutation
-    
-    }
+        recipientAddress.innerHTML = variables.recipientAddressLine1 + "<br/>" + variables.recipientAddressLine2 + "<br/>" + variables.recipientAddressLine3;
+        recipientName.innerHTML = variables.recipientName;
+        salutation.innerHTML = variables.salutation;
+    };
 
     makeRecipient();
 
     const makeFooter = () => {
         document.getElementById('senderSignature').innerHTML = `${variables.senderName}7`;
         document.getElementById('senderName').innerHTML = variables.senderName;
-    }
+    };
 
     makeFooter();
 
     const makeBody = () => {
-        const letterContent = document.getElementById('letterContent');
         const reSubject = document.getElementById('reSubject');
         const salutation = document.getElementById('salutation');
         const textBody = document.getElementById('textBody');
 
-        reSubject.innerHTML = `<b>Betreff: ${variables.reSubject}</b>`
-        salutation.innerHTML = variables.salutation
-        // console.log("variables.textBody", variables.textBody)
-        textBody.innerHTML = `${variables.textBody.replace(/\n/g, '<br/>')}`
-    }
+        reSubject.innerHTML = `<b>Betreff: ${variables.reSubject}</b>`;
+        salutation.innerHTML = variables.salutation;
+        textBody.innerHTML = `${variables.textBody.replace(/\n/g, '<br/>')}`;
+    };
 
     makeBody();
 
-
     const splitCanvasIntoPages = (canvas) => {
-        console.log("in splitCanvasIntoPages", typeof canvas)
-        console.log("Canvas methods:", Object.getOwnPropertyNames(canvas.__proto__));
-        mainCanvasContext = canvas.getContext('2d')
-        console.log("mainCanvasContext", mainCanvasContext)
-        mainCanvasImageData = mainCanvasContext.getImageData(0, 0, canvas.width, canvas.height)
-        console.log("mainCanvasImageData", mainCanvasImageData)
-        let maxIndivHeight = 2673
-        let padding = 180
-        let pageIncrement = maxIndivHeight - (padding * 2)
-        
-
-        let currentHeight = 0
-        const pages = []
-        const width = canvas.width
-        const height = canvas.height
-        // const pageHeight = 297
-        const pageHeight = 3521
-        console.log(`canvas height: ${height}\nrenderTargetHeight: ${document.getElementById('renderTarget').offsetHeight}\ncanvas width: ${width}\nrenderTargetWidth: ${document.getElementById('renderTarget').offsetWidth}`)
-
-        //starting height is 180
-        currentHeight = padding
-        let currentPage = 0
+        const mainCanvasContext = canvas.getContext('2d');
+        const mainCanvasImageData = mainCanvasContext.getImageData(0, 0, canvas.width, canvas.height);
+        let maxIndivHeight = 2673;
+        let padding = 180;
+        let pageIncrement = maxIndivHeight - (padding * 2);
+        let currentHeight = padding;
+        const pages = [];
+        const width = canvas.width;
+        const height = canvas.height;
+        let currentPage = 0;
 
         while (currentHeight < height) {
-
-            let thisIncrement = pageIncrement
-            
-            let rowStart = ((currentHeight + thisIncrement) * width * 4); // Each pixel has 4 values (r,g,b,a)
+            let thisIncrement = pageIncrement;
+            let rowStart = ((currentHeight + thisIncrement) * width * 4);
             let rowEnd = rowStart + (width * 4);
             let rowPixels = mainCanvasImageData.data.slice(rowStart, rowEnd);
             let isBlack = rowPixels.some(pixel => pixel !== 255);
-            // console.log("isBlack", isBlack)
 
             while (isBlack) {
-                thisIncrement = thisIncrement - 1
-                rowStart = ((currentHeight + thisIncrement) * width * 4); // Each pixel has 4 values (r,g,b,a)
+                thisIncrement = thisIncrement - 1;
+                rowStart = ((currentHeight + thisIncrement) * width * 4);
                 rowEnd = rowStart + (width * 4);
                 rowPixels = mainCanvasImageData.data.slice(rowStart, rowEnd);
                 isBlack = rowPixels.some(pixel => pixel !== 255);
             }
 
-
-            const page = document.createElement('canvas')
-            page.width = width
-            page.height = maxIndivHeight
-            const ctx = page.getContext('2d')
+            const page = document.createElement('canvas');
+            page.width = width;
+            page.height = maxIndivHeight;
+            const ctx = page.getContext('2d');
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, width, maxIndivHeight);
 
             if (currentPage === 0) {
                 ctx.drawImage(
                     canvas,
-                    0, 0,  // Source x, y
-                    width, thisIncrement + padding,  // Source width, height
-                    0, 0,  // Destination x, y 
-                    width, thisIncrement + padding   // Destination width, height
-                )
+                    0, 0,
+                    width, thisIncrement + padding,
+                    0, 0,
+                    width, thisIncrement + padding
+                );
             } else {
                 ctx.drawImage(
                     canvas,
-                    0, currentHeight,  // Source x, y
-                    width, thisIncrement,  // Source width, height
-                    0, 180,  // Destination x, y 
-                    width, thisIncrement   // Destination width, height
-                )
+                    0, currentHeight,
+                    width, thisIncrement,
+                    0, 180,
+                    width, thisIncrement
+                );
             }
 
-            pages.push(page)
-            currentHeight += thisIncrement
-            currentPage += 1
+            pages.push(page);
+            currentHeight += thisIncrement;
+            currentPage += 1;
         }
 
-
-        return pages
-    }
-
-
-    // FUNCTIONS
-
+        return pages;
+    };
 
     async function generatePDF() {
-
-        
         updateVariables();
         updateInputNumbers();
         makeHeader();
@@ -992,12 +844,8 @@
         makeBody();
         makeFooter();
 
-        const content = document.getElementById('pageContent');
-
         const container = document.querySelector('.firmPartners');
-
         container.classList.remove('two-columns', 'three-columns', 'four-columns', 'five-columns');
-        // container.style.fontSize = '';
 
         if (variables.firmPartnersNames.length > 50) {
             container.style.fontSize = '9px';
@@ -1012,157 +860,121 @@
             container.style.fontSize = '10px';
             container.classList.add('two-columns');
         }
-      const date = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date').textContent = date.toLocaleDateString('de-DE', options);
+        const date = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date').textContent = date.toLocaleDateString('de-DE', options);
 
-      const renderTarget = document.getElementById('renderTarget');
-      renderTarget.style.fontFamily = fontFamily[variables.snootiness - 1];
+        const renderTarget = document.getElementById('renderTarget');
+        renderTarget.style.fontFamily = fontFamily[variables.snootiness - 1];
+        renderTarget.innerHTML = document.getElementById("content").innerHTML;
 
-      // You can dynamically update this however you like
-      renderTarget.innerHTML = document.getElementById("content").innerHTML;
+        const canvas = await html2canvas(renderTarget, { scale: 2 , autoPaging: 'text'});
+        const pages = splitCanvasIntoPages(canvas);
 
-      const canvas = await html2canvas(renderTarget, { scale: 2 , autoPaging: 'text'});
+        document.getElementById('output').innerHTML = "";
+        pages.forEach((page) => {
+            let imgData = page.toDataURL('image/jpeg', 1);
+            const newImage = document.createElement('img');
+            newImage.classList.add('pdfPreview');
+            newImage.src = imgData;
+            document.getElementById('output').appendChild(newImage);
+        });
 
-      const pages = splitCanvasIntoPages(canvas)
+        if (firstLoad) {
+            firstLoad = false;
+            lockPreviewHeightOnce();
+        }
 
-      //clear the output container
-      document.getElementById('output').innerHTML = ""
-      
-      //add the pages to the output container
-      pages.forEach((page, index) => {
-        console.log("page", page)
+        function lockPreviewHeightOnce () {
+            const out = document.getElementById('output');
+            const firstImg = out.querySelector('img');
+            if (!firstImg) return;
 
-        let imgData = page.toDataURL('image/jpeg', 1);
-        // make a new image element with the pdfPreview class
-        const newImage = document.createElement('img');
-        newImage.classList.add('pdfPreview');
-        newImage.src = imgData;
-        // if (index === 0) {
-        //     newImage.classList.add('firstPage')
-        //     newImage.onload = () => {
-        //         console.log("newImage", newImage.)
-        //         setPreviewMaxHeight(Math.max(newImage.height, document.getElementById('inputs').offsetHeight))
-        //     }
-        // }
-        //append the new image to the output container
-        document.getElementById('output').appendChild(newImage);
+            const setMinHeight = () => {
+                out.style.minHeight = `${out.offsetHeight}px`;
+            };
 
-      })
-
-      if (firstLoad) {
-        firstLoad = false;
-        lockPreviewHeightOnce();
-      }
-
-      function lockPreviewHeightOnce () {
-        const out = document.getElementById('output');
-        const firstImg = out.querySelector('img');
-        if (!firstImg) return;   // safety guard
-
-        const setMinHeight = () => {
-            out.style.minHeight = `${out.offsetHeight}px`;
-        };
-
-        if (firstImg.complete) {
-            // came from cache – onload won’t fire
-            setMinHeight();
-        } else {
-            firstImg.onload = setMinHeight;
+            if (firstImg.complete) {
+                setMinHeight();
+            } else {
+                firstImg.onload = setMinHeight;
+            }
         }
     }
 
-
-
-    }
-
     async function downloadPDF() {
-    generatePDF();
-    const pdf = new jsPDF({
+        generatePDF();
+        const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'mm',
             format: 'a4'
         });
-        
 
-      const canvas = await html2canvas(renderTarget, { scale: 2 });
-      const pages = splitCanvasIntoPages(canvas)
+        const canvas = await html2canvas(renderTarget, { scale: 2 });
+        const pages = splitCanvasIntoPages(canvas);
 
-      pages.forEach((page, index) => {
-        //add the page to the pdf
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (page.height * pdfWidth) / page.width;
-        let imgData = page.toDataURL('image/jpeg', 1);
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-        if (index < pages.length - 1) {
-            pdf.addPage();
-        }
-      })
+        pages.forEach((page, index) => {
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (page.height * pdfWidth) / page.width;
+            let imgData = page.toDataURL('image/jpeg', 1);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            if (index < pages.length - 1) {
+                pdf.addPage();
+            }
+        });
 
-
-
-    //   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      stringifiedVariables = JSON.stringify(variables);
-      pdf.addMetadata(stringifiedVariables, 'variables');
-      pdf.save('Forderungsschreiben_Final_2.pdf');
-      fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pdfGenerated')
-
+        stringifiedVariables = JSON.stringify(variables);
+        pdf.addMetadata(stringifiedVariables, 'variables');
+        pdf.save('Forderungsschreiben_Final_2.pdf');
+        fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pdfGenerated');
     }
 
     const uploadPDF = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'application/pdf';
-    input.onchange = async function() {
-        const file = this.files[0];
-        if (!file) return;
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/pdf';
+        input.onchange = async function() {
+            const file = this.files[0];
+            if (!file) return;
 
-        const arrayBuffer = await file.arrayBuffer();
-        const uint8Array = new Uint8Array(arrayBuffer);
-        const text = new TextDecoder().decode(uint8Array);
+            const arrayBuffer = await file.arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            const text = new TextDecoder().decode(uint8Array);
 
-        // Try to extract the variables metadata
-        const variablesMatch = text.match(/<jspdf:metadata>([^<]*?)<\/jspdf:metadata>/);
-        if (variablesMatch && variablesMatch[1]) {
-            try {
-                const variablesJson = JSON.parse(variablesMatch[1]);
-                // Update global variables object
-                variables = variablesJson;
-                console.log("variables", variables)
-                document.getElementById('textBodyInput').value = variables.textBody;
-                document.getElementById('firmAgeInput').value = new Date().getFullYear() - variables.firmYear;
-                document.getElementById('snootinessInput').value = variables.snootiness;
-                document.getElementById('firmFloorInput').value = variables.firmFloor;
-                document.getElementById('nameSourceInput').value = variables.firmPartnersSource;
-                document.getElementById('nameNumberInput').value = variables.firmPartnersNames.length;
-                document.getElementById('recipientAddressLine1Input').value = variables.recipientAddressLine1;
-                document.getElementById('recipientAddressLine2Input').value = variables.recipientAddressLine2;
-                document.getElementById('recipientAddressLine3Input').value = variables.recipientAddressLine3;
-                document.getElementById('recipientInput').value = variables.recipientName;
-                document.getElementById('reSubjectInput').value = variables.reSubject;
+            const variablesMatch = text.match(/<jspdf:metadata>([^<]*?)<\/jspdf:metadata>/);
+            if (variablesMatch && variablesMatch[1]) {
+                try {
+                    const variablesJson = JSON.parse(variablesMatch[1]);
+                    variables = variablesJson;
+                    document.getElementById('textBodyInput').value = variables.textBody;
+                    document.getElementById('firmAgeInput').value = new Date().getFullYear() - variables.firmYear;
+                    document.getElementById('snootinessInput').value = variables.snootiness;
+                    document.getElementById('firmFloorInput').value = variables.firmFloor;
+                    document.getElementById('nameSourceInput').value = variables.firmPartnersSource;
+                    document.getElementById('nameNumberInput').value = variables.firmPartnersNames.length;
+                    document.getElementById('recipientAddressLine1Input').value = variables.recipientAddressLine1;
+                    document.getElementById('recipientAddressLine2Input').value = variables.recipientAddressLine2;
+                    document.getElementById('recipientAddressLine3Input').value = variables.recipientAddressLine3;
+                    document.getElementById('recipientInput').value = variables.recipientName;
+                    document.getElementById('reSubjectInput').value = variables.reSubject;
 
-                updateInputNumbers();
-                makeHeader();
-                makeRecipient();
-                makeBody();
-                makeFooter();
+                    updateInputNumbers();
+                    makeHeader();
+                    makeRecipient();
+                    makeBody();
+                    makeFooter();
 
-                // Regenerate PDF with new variables
-                generatePDF();
-            } catch (e) {
-                console.error('Failed to parse variables metadata:', e);
+                    generatePDF();
+                } catch (e) {
+                    console.error('Failed to parse variables metadata:', e);
+                }
+            } else {
+                console.log('No variables metadata found in PDF');
             }
-        } else {
-            console.log('No variables metadata found in PDF');
-        }
+        };
+        input.click();
     };
-    input.click();
 
-
-    }
-
-
-    //PAGE SETUP STUFF
     const setPreviewMaxHeight = () => {
         const inputs = document.getElementById('inputs');
         const height = inputs.offsetHeight;
@@ -1172,29 +984,21 @@
             preview.style.height = `${height + 20}px`;
             preview.style.overflow = "auto";
         }
-        // preview.style.maxHeight = `${height + 20}px`;
-        // preview.style.height = `${height + 20}px`
-        // preview.style.overflow = "auto"
-    }
+    };
 
-
-    window.onload = () => {generatePDF(); setPreviewMaxHeight()};
-
+    window.onload = () => {generatePDF(); setPreviewMaxHeight();};
 
     document.getElementById('snootinessInput').addEventListener('change', generatePDF);
     document.getElementById('nameNumberInput').addEventListener('change', changeNumberOfNames);
     document.getElementById('firmFloorInput').addEventListener('change', generatePDF);
     document.getElementById('nameSourceInput').addEventListener('change', changeSourceOfNames);
     document.getElementById('firmAgeInput').addEventListener('change', generatePDF);
-    // listen to all text inputs and generatePDF when they change
     document.querySelectorAll('input[type="text"]').forEach(input => {
         input.addEventListener('input', generatePDF);
     });
     document.querySelectorAll('textarea').forEach(textarea => {
         textarea.addEventListener('input', generatePDF);
     });
-
-
   </script>
 </body>
 </html>
