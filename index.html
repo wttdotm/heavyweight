@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
-  <title>Heavyweight: Letters Taken Seriously</title>
+  <meta name="viewport" content="width=device-width, initial-scale=5">
+  <title>Heavyweight: Briefe, die ernst genommen werden</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="icon" type="image/png" href="assets/heavyweight_favicon.png">
-  <!-- preview image -->
-  <meta property="og:title" content="Heavyweight: Letters Taken Seriously - Free & Open Legal Letterhead Generator">
-  <meta property="og:description" content="Generate professional-looking demand letters with style and snootiness">
+  <!-- Vorschau-Bild -->
+  <meta property="og:title" content="Heavyweight: Briefe, die ernst genommen werden - Kostenloser & Offener Generator für juristische Briefköpfe">
+  <meta property="og:description" content="Erstellen Sie professionelle Forderungsschreiben mit Stil und Ernsthaftigkeit">
   <meta property="og:image" content="./assets/heavyweight_linkpreview.png">
   <meta property="og:url" content="https://heavyweight.cc">
   <meta name="twitter:card" content="summary_large_image">
@@ -19,7 +19,7 @@
   <meta property="og:site_name" content="Heavyweight">
   
 
-  <!-- font imports -->
+  <!-- Schriftarten -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Linden+Hill:ital@0;1&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -419,111 +419,84 @@
     let firstLoad = true;
 
     const exampleRecipients = {
-        delta : {
-            recipientName: "Delta Airlines",
-            recipientAddressLine1: "1010 Delta Blvd.",
-            recipientAddressLine2: "Atlanta, GA, 30354",
-            recipientAddressLine3: "United States",
-            reSubject: "Flight Refund",
-            textBody: "Complain about your flight here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        lufthansa : {
+            recipientName: "Lufthansa Airlines",
+            recipientAddressLine1: "Lufthansa Aviation Center",
+            recipientAddressLine2: "60546 Frankfurt am Main",
+            recipientAddressLine3: "Deutschland",
+            reSubject: "Flugerstattung",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen, um ein Anliegen zu besprechen, das Ihre Aufmerksamkeit erfordert. Bitte prüfen Sie die Details sorgfältig und teilen Sie mir Ihre Rückmeldung mit.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
         amazon : {
-            recipientName: "Amazon Services LLC",
-            recipientAddressLine1: "410 Terry Ave N",
-            recipientAddressLine2: "Seattle, WA, 98101",
-            recipientAddressLine3: "United States",
-            reSubject: "Amazon Refund",
-            textBody: "Complain about your Amazon experience here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            recipientName: "Amazon Deutschland Services GmbH",
+            recipientAddressLine1: "Domagkstraße 28",
+            recipientAddressLine2: "80807 München",
+            recipientAddressLine3: "Deutschland",
+            reSubject: "Amazon-Erstattung",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch möchte mich über eine Angelegenheit beschweren, die Ihre sofortige Aufmerksamkeit erfordert. Es ist von größter Bedeutung, dass dieses Problem umgehend gelöst wird, um weitere Unannehmlichkeiten zu vermeiden. Ich bitte Sie, die notwendigen Maßnahmen zu ergreifen und mich über den Fortschritt zu informieren.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
         },
         tesla : {
-            recipientName: "Tesla HQ",
-            recipientAddressLine1: "1 Tesla Rd",
-            recipientAddressLine2: "Austin, TX, 78725",
-            recipientAddressLine3: "United States",
-            reSubject: "Tesla Refund",
-            textBody: "Complain about your Tesla experience here. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            recipientName: "Tesla Deutschland GmbH",
+            recipientAddressLine1: "Blumenstraße 17",
+            recipientAddressLine2: "80331 München",
+            recipientAddressLine3: "Deutschland",
+            reSubject: "Tesla-Erstattung",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen, um eine Rückerstattung für eine kürzlich getätigte Transaktion zu beantragen. Die Details der Transaktion sind wie folgt: [Details einfügen]. Ich bitte Sie, die Rückerstattung so schnell wie möglich zu bearbeiten und mich über den Status zu informieren.\n\nVielen Dank für Ihre Unterstützung.\n\nMit freundlichen Grüßen,\n[Ihr Name]",
+        },
+        landlord : {
+            recipientName: "Greta Vermieter",
+            recipientAddressLine1: "Musterstraße 12",
+            recipientAddressLine2: "2. Etage",
+            recipientAddressLine3: "10115 Berlin",
+            reSubject: "Warmwasserprobleme in der Musterstraße 12",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch möchte Sie darauf hinweisen, dass es in meiner Wohnung seit einiger Zeit erhebliche Probleme mit der Wasserversorgung gibt. Trotz mehrfacher Meldungen wurde das Problem bisher nicht behoben. Ich fordere Sie hiermit auf, die notwendigen Reparaturen unverzüglich durchzuführen, um die Situation zu verbessern.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+        },
+        workplace : {
+            recipientName: "Frau Meier",
+            recipientAddressLine1: "Kaffeebar GmbH",
+            recipientAddressLine2: "Hauptstraße 45",
+            recipientAddressLine3: "50667 Köln",
+            reSubject: "Verstöße gegen Arbeitszeitgesetze",
+            textBody: "Sehr geehrte Damen und Herren,\n\nEs ist mir aufgefallen, dass es in Ihrem Unternehmen zu Verstößen gegen geltende Arbeitsgesetze kommt. Ich fordere Sie auf, diese Verstöße umgehend zu beheben und sicherzustellen, dass alle Mitarbeiter fair und rechtmäßig behandelt werden. Bitte informieren Sie mich über die Maßnahmen, die Sie ergreifen werden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+        },
+        client : {
+            recipientName: "[Ihr Kunde]",
+            recipientAddressLine1: "[Kundenadresse Zeile 1]",
+            recipientAddressLine2: "[Kundenadresse Zeile 2]",
+            recipientAddressLine3: "[Kundenadresse Zeile 3]",
+            reSubject: "[Ihr Betreff]",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch schreibe Ihnen im Namen von [Ihr Name], der Sie beauftragt hat, eine Dienstleistung zu erbringen. Leider wurde die vereinbarte Zahlung bisher nicht geleistet. Ich fordere Sie auf, die ausstehende Zahlung umgehend zu begleichen, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
+        },
+        securityDeposit : {
+            recipientName: "[Ihr Vermieter]",
+            recipientAddressLine1: "[Vermieteradresse Zeile 1]",
+            recipientAddressLine2: "[Vermieteradresse Zeile 2]",
+            recipientAddressLine3: "[Vermieteradresse Zeile 3]",
+            reSubject: "Kaution Rückforderung",
+            textBody: "Sehr geehrte Damen und Herren,\n\nIch fordere hiermit die Rückgabe meiner Kaution in Höhe von €[Betrag] für die Immobilie in [Adresse], die ich am [Datum] verlassen habe. Bitte überweisen Sie den Betrag innerhalb von 7 Tagen auf mein Konto, um weitere rechtliche Schritte zu vermeiden.\n\nVielen Dank für Ihre Kooperation.\n\nMit freundlichen Grüßen,\n[Ihr Name]"
         }
-    ,
-    landlord : {
-        recipientName: "Greta Realjahb",
-        recipientAddressLine1: "450 Harman St",
-        recipientAddressLine2: "Unit B",
-        recipientAddressLine3: "Brooklyn, New York",
-        reSubject: "Hot Water Issues at 450 Harman St",
-        textBody: "Morry Kolman resides at your property at 450 Harman St. Since April 15, 2025, Mr. Kolman's apartment has not had consistent water pressure or hot water. On many days, including but not limited to April 15, April 17, April 19, April 22, April 25, April 27, May 2, May 4, and May 5, the water coming out of Mr. Kolman's showerhead was a cold trickle.\n\nUnder New York law, you have an obligation to provide a livable, safe, and sanitary apartment. The failure to provide Mr. Kolman with hot water violates this obligation. Mr. Kolman previously notified you on April 20, 2025 of the persistent issues with the shower, but the situation has not improved.\n\nPlease send out a maintenance person to fix the issue with the hot water and water pressure immediately. Once those repairs are complete, we are willing to negotiate what percentage of rent should be discounted for the relevant period.\n\nWe look forward to your prompt reply. Mr. Kolman reserves all rights."
-    },
-    workplace : {
-        recipientName: "Karen Anderson",
-        recipientAddressLine1: "OCF Coffeehouse",
-        recipientAddressLine2: "1575 Roundhouse Road",
-        recipientAddressLine3: "San Antonio, Texas",
-        reSubject: "Wage and Hour Violations",
-        textBody: "It has come to my attention that workers at OCF Coffeehouse have not been receiving overtime pay for hours worked in excess the allowed amount. Your categorization of baristas as exempt, despite the fact that they are not salaried and make less than $40K per year is likely a violation of state and federal law. Additionally, suggesting that baristas should clock out even though they still have cleaning tasks to perform is flagrantly illegal.\n\nOCF Coffeehouse's baristas are beloved members of our local community. Jane volunteers at the animal shelter between shifts, whereas Olive is an integral part of the local aerials group. They deserve a workplace that recognizes their contributions and pays them appropriately.\n\nWe look forward to your response, including a complete list of the payments you plan to provide to each staff member. We, of course, reserve all rights."
-    },
-    client : {
-        recipientName: "[Your Client]",
-        recipientAddressLine1: "[Client address line 1]",
-        recipientAddressLine2: "[Client address line 2]",
-        recipientAddressLine3: "[Client address line 3]",
-        reSubject: "[Your Subject]",
-        textBody: "I write to you on behalf of [Your Name], who you contracted to provide freelance work. [Your Name] signed a contract with you on [Contract Date] specifying the terms of their engagement. Specifically, they would be paid [Payment Amount] for [Service Rendered].\n[Your Name] invoiced [Company] on [Invoice Date], with invoice terms of [Invoice Term]. That invoice is now past due, and [Your Name] has not received payment.\nPlease remit payment immediately. If [Company] fails to pay, [Your Name] reserves the right to pursue all legal remedies, including pursuit of any damages that have come from your failure to pay in a timely fashion."
-    },
-    securityDeposit : {
-        recipientName: "[Your Landlord]",
-        recipientAddressLine1: "[Landlord address line 1]",
-        recipientAddressLine2: "[Landlord address line 2]",
-        recipientAddressLine3: "[Landlord address line 3]",
-        reSubject: "Security Deposit Request",
-        textBody: "[YOUR NAME] formally requests the immediate return of their $[AMOUNT] security deposit for the property at [OLD ADDRESS], which they vacated on [MOVE OUT DATE]. You are now past the deadline for returning security deposits, which under the terms of the lease was due [SECURITY DEPOSIT DUE DATE].\nAs of today you have not returned their deposit or provided an itemized list of deductions. Therefore, [YOUR NAME] is requesting the full return of their deposit.\n\nPlease send the total deposit of $[AMOUNT] to [YOUR NEW ADDRESS] within 7 days of this letter to settle this matter promptly. [YOUR NAME] reserves all rights."
-    },
-    securityDeposit : {
-        recipientName: "[Your Landlord]",
-        recipientAddressLine1: "[Landlord address line 1]",
-        recipientAddressLine2: "[Landlord address line 2]",
-        recipientAddressLine3: "[Landlord address line 3]",
-        reSubject: "Security Deposit Request",
-        textBody: "[YOUR NAME] formally requests the immediate return of their $[AMOUNT] security deposit for the property at [OLD ADDRESS], which they vacated on [MOVE OUT DATE]. You are now past the deadline for returning security deposits, which under the terms of the lease was due [SECURITY DEPOSIT DUE DATE].\nAs of today you have not returned their deposit or provided an itemized list of deductions. Therefore, [YOUR NAME] is requesting the full return of their deposit.\n\nPlease send the total deposit of $[AMOUNT] to [YOUR NEW ADDRESS] within 7 days of this letter to settle this matter promptly. [YOUR NAME] reserves all rights."
-    },
-
     }
 
     const addresses = [
-        ['Boylston St.', 'Boston, MA, 02116'],
-        ['E Wolf Point Plaza', 'Chicago, IL , 60606'],
-        ['Louisiana St.', 'Houston, TX, 77002'],
-        ['Avenue of the Stars', 'Los Angeles, CA, 90067'],
-        ['6th Ave', 'New York, NY, 10019'],
-        ['University Ave.', 'Palo Alto, CA, 94301'],
-        ['New York Ave., NW', 'Washington, DC, 20005'],
-        ['Lexington Ave', 'New York, NY, 10022'],
-        ['Century Park East', 'Los Angeles, CA, 90067'],
-        ['K Street, NW', 'Washington, DC, 20006'],
-        ['Avenue of the Americas', 'New York, NY, 10020'],
-        ['State Street', 'Boston, MA, 02109'],
-        ['South Biscayne Boulevard', 'Miami, FL, 33131']
+        ['Musterstraße', '10115 Berlin'],
+        ['Königsallee', '40212 Düsseldorf'],
+        ['Maximilianstraße', '80539 München'],
+        ['Zeil', '60313 Frankfurt am Main'],
+        ['Schildergasse', '50667 Köln'],
+        ['Kurfürstendamm', '10719 Berlin'],
+        ['Hauptstraße', '70173 Stuttgart'],
+        ['Friedrichstraße', '10117 Berlin'],
+        ['Bahnhofstraße', '8001 Zürich'],
+        ['Marienplatz', '80331 München'],
+        ['Neuer Wall', '20354 Hamburg'],
+        ['Kärntner Straße', '1010 Wien'],
+        ['Getreidegasse', '5020 Salzburg']
     ]
 
     const nameSources = {
-        mayflower : {
-            first: ['John', 'Ellen', 'John', 'Francis', 'Christopher', 'Mary', 'Solomon', 'William', 'Joseph', 'Priscilla', 'Robert', 'Alice', 'Miles', 'Rose', 'Francis', 'Sarah', 'Samuel', 'Stephen', 'Elizabeth', 'Giles', 'Constance', 'Damaris', 'Oceanus', 'Edward', 'Richard', 'Edmond', 'Peter', 'Robert', 'Giles', 'Thomas', 'Andrew', 'Catherine', 'Desire', 'Roger', 'William', 'Jasper', 'Dorothy', 'Edward', 'Elizabeth', 'George', 'Elias', 'Gilbert', 'Love', 'Wrestling', 'Richard', 'Isaac', 'Bartholomew', 'Remember', 'Susanna', 'Resolved', 'Agnus', 'Henry', 'Humility', 'Joan', 'Ann', 'James', 'Moses', 'Digory'],
-            last: ['Billington', 'Martin', 'Prower', 'Langemore', 'Mullins', 'Carter', 'Rigsdale', 'Standish', 'Eaton', 'Hopkins', 'Fisher', 'Doten', 'Leister', 'Britteridge', 'Clarke', 'Gardiner', 'Margeson', 'Brown', 'Warren', 'Jones', 'Alden', 'Coppin', 'Heale', 'English', 'Allerton', 'Parker', 'Trevore', 'Williamson', 'Carver', 'White', 'Minter', 'Howland', 'Wilder', 'Latham', 'More', 'Bradford', 'May', 'Winslow', 'Barker', 'Soule', 'Story', 'Brewster', 'Norris', 'Hooke', 'Jackson', 'Holbeck', 'Thompson', 'Tilley', 'Cooper', 'Sampson', 'Hurst', 'Cook', 'Rogers', 'Tinker', 'Fuller', 'Turner', 'Chilton', 'Crackstone']
-        },
-        greenwich : {
-            first : ['Michael', 'Patricia', 'Thomas', 'Javier', 'Francia', 'Craig', 'Gerald', 'Jennifer', 'Debbie', 'Hector', 'Katharine', 'Walter', 'Jillian', 'Seth', 'Hale', 'Isra', 'Lisa', 'Sally', 'Eric', 'Kimberly', 'Andrea', 'Maria', 'John', 'Ellen', 'Edward', 'Adam', 'Gregory', 'Joshua', '', 'Francis', 'Margaret', 'Marilyn', 'Glen', 'Jill', 'James', 'Ronald', 'Robert', 'Claudia', 'Nicole', 'Linda', 'Christopher', 'Donald', 'Charles', 'Stephanie', 'Allyson', 'Peter', 'Keith', 'Valerie', 'Barbara', 'Blake', 'Christina', 'Carol', 'Alice', 'Elizabeth', 'Christine', 'Laura', 'Tiffany', 'Morgan', 'Susan', 'Frederick', 'Douglas', 'Pamela', 'Noah', 'Mary', 'Dawn', 'Allison', 'Tracy', 'William', 'Lynn', 'Marianne', 'Donna', 'Paul', 'Alison', 'Karen', 'Dean', 'Amaris', 'Hilary', 'Ogden', 'Ingrid', 'Sandra', 'Ramya', 'Daniel', 'Samuelle', 'Coline', 'Jonathan', 'Cathleen', 'Joseph', 'Myra', 'Jan', 'Lucy', 'Genevieve', 'Julia', 'Abbe', 'Kathleen', 'Sharon', 'Brigitte', 'Martin', 'Aaron', 'David', 'Nan', 'Mark', 'Lindy', 'Katherine', 'Rosemarie', 'Brian', 'Abigail', 'Janet', 'Jaysen', 'Stephen', 'Richard', 'Anthony', 'Noelle', 'Victoria', 'Cheryl', 'Ammar', 'Rosalind', 'Kristen', 'Lauren', 'Sean', 'Andrew', 'Jane', 'Vinay', 'Averardo', 'Aakash', 'Sylvester', 'Sheila', 'Kara', 'Nerlyn', 'Alexander', 'Jocelyn', 'Caryn', 'Chloe', 'Samuel', 'Felice', 'Geralyn', 'Steven', 'Diego', 'Sophia', 'Ferdinando', 'Vernon', 'Pragati', 'Cathryn', 'Joanne', 'Louisa', 'Amelia', 'Joyce', 'Joan', 'Maya', 'Jeffrey', 'Karsten', 'Alexis', 'Erika', 'Michelle', 'Catherine', 'Stacey', 'Jordan', 'Cliff', 'Stacy', 'Bonnie'],
-            last: ['Acerbo', 'Aleman', 'Amundson', 'Anderson', 'Andrews', 'Appelbaum', 'Arzeno', 'Ashworth', 'Auch', 'Aufderheide', 'Bacon', 'Bayram', 'Edmundson', 'Bednar', 'Behringer', 'Beiley', 'Blank', 'Blume', 'Bocchino', 'Bologna', 'Brennan-Galvin', 'Broadhurst', 'Brodsky', 'Brown', 'Brumberg', 'Burgweger', 'Butler', 'Cahill', 'Cahn', 'Canner', 'Capalbo', 'Capparelle', 'Carosella', 'Carroll', 'Carter', 'Carthaus', 'Casson', 'Chaney', 'Chapman', 'Chaudhri', 'Cochran', 'Colford', 'Collins', 'Conway', 'Costello', 'Cowie', 'Cowin', 'Cruikshank', 'Dadakis', 'Damsky', 'Darula', 'DeFelice', 'Delany', 'Devaney', 'Dietrich', 'Downey', 'Ducret', 'Duff', 'Eckert', 'Edwards', 'Estevez', 'Evangelista', 'Evans', 'Feldman', 'Fenton', 'Ferraro', 'Finn', 'Finz', 'Flynn', 'Fontana', 'Fortunato', 'Frantz', 'Freedman', 'Galindo', 'Galvin', 'Garelick', 'Gaudioso-Zeale', 'Genvovese', 'Ghiorse', 'Giannuzzi', 'Gladstone', 'Goldstein', 'Goss', 'Guadalupe', 'Gunn', 'Hammond', 'Hang', 'Haroche', 'Harris', 'Shaye', 'Hindman', 'Hopley', 'Terese', 'Jones', 'Kantor', 'Cate', 'Keller', 'Kelly', 'Klein', 'Klockenbrink', 'Kniffen', 'Krasnor', 'Genny', 'Lane', 'Langel', 'Large', 'Kate', 'Lazar', 'Leader', 'Lee', 'Leibrock', 'Leonard', 'Levine', 'Levy', 'Lewis', 'Lilien', 'LoBalbo', 'Mac', 'Macaluso', 'Malin', 'McCarthy', 'McDaniel', 'Medhurst', 'Merrill', 'Meskers', 'Bill', 'Sanders', 'Montier', 'Moor', 'Moore', 'Spencer', 'Moss', 'Murad', 'Murdock', 'Myer', 'Neuman', 'Nicastro', 'Niemynski',  'Olesen', 'Olmsted', 'Brash', 'Pande', 'Parsons', 'Pascarella', 'Patel', 'Pecora', 'Pell', 'Perloe', 'Phelan', 'Philbin', 'Pierson', 'Popp', 'Porricelli', 'Riddle', 'Rogers', 'Rosenbaum', 'Rosenfeld', 'Rovelli', 'Rubin', 'Molly', 'Samponaro', 'Sanchez', 'Scarpelli', 'Schiro', 'Schwartz', 'Shankman', 'Snyder', 'Soler', 'Soni', 'Sprung', 'Cathy', 'Steinhart', 'Stone', 'Sulich', 'Sullivan', 'Szabo', 'Jay', 'Thakor', 'Tichio', 'Tobin', 'Dyer', 'Treibick', 'Urdang', 'Vagner', 'Van', 'Brachel', 'Voulgaris', 'Vranos', 'Walsh', 'Waters', 'Waugh', 'Weisbecker', 'West', 'Whitaker', 'Widlitz', 'Winston', 'Yarett', 'Yonce', 'Young', 'Zarrilli', 'Zorthian']
-        },
-        enron : {
-            first : ['Philip', 'John', 'Harpreet', 'Robert', 'Susan', 'Eric', 'Don', 'Sally', 'Robert', 'Lynn', 'Sandra', 'Rick', 'Larry', 'Mike', 'Michelle', 'Monika', 'Shelley', 'Sean', 'Martin', 'Jeff', 'Dana', 'Craig', 'David', 'James', 'Stacy', 'Lindy', 'Tom', 'Chris', 'Frank', 'Daren', 'Mary', 'John', 'Drew', 'Lisa', 'Randall', 'Tracy', 'Chris', 'Douglas', 'Daron', 'John', 'Michael', 'Mark', 'Mark', 'Mary', 'Steven', 'Rod', 'Marie', 'Scott', 'Juan', 'John', 'Keith', 'Stanley', 'Kevin', 'Dan', 'Tana', 'Vince', 'Steven', 'Peter', 'Kam', 'Jeff', 'Louise', 'Tori', 'John', 'Kenneth', 'Matthew', 'Andrew', 'Eric', 'Michelle', 'Teb', 'Phillip', 'Paul', 'Michael', 'Kay', 'Thomas', 'Lawrence', 'Danny', 'Mike', 'Bradley', 'Jonathan', 'Errol', 'Steven', 'Albert', 'Patrice', 'Matthew', 'Scott', 'Gerald', 'Stephanie', 'Joe', 'Susan', 'Debra', 'Vladi', 'Phillip', 'Kevin', 'Joe', 'Dutch', 'Bill', 'Jay', 'Cooper', 'Andrea', 'Richard', 'Robin', 'Benjamin', 'Kevin', 'Elizabeth', 'Eric', 'Holden', 'Monique', 'Richard', 'Diana', 'Darrell', 'Jim', 'Susan', 'Cara', 'Sara', 'Jeffrey', 'Richard', 'Hunter', 'Jeffery', 'Ryan', 'Matt', 'Geir', 'Steven', 'Theresa', 'Carol', 'James', 'Joe', 'Chris', 'Geoffery', 'Fletcher', 'Mike', 'Kate', 'Mark', 'Jane', 'Paul', 'Judy', 'Barry', 'Kim', 'Kimberly', 'Charles', 'Lawrence', 'Stacey', 'Mark', 'Jason', 'William', 'Jason', 'Paul', 'Andy', 'John'],
-            last : ['Allen', 'Arnold', 'Arora', 'Badeer', 'Bailey', 'Bass', 'Baughman', 'Beck', 'Benson', 'Blair', 'Brawner', 'Buy', 'Campbell', 'Carson', 'Cash', 'Causholli', 'Corman', 'Crandall', 'Cuilla', 'Dasovich', 'Davis', 'Dean', 'Delainey', 'Derrick', 'Dickson', 'Donoho', 'Donohoe', 'Dorland', 'Ermis', 'Farmer', 'Fischer', 'Forney', 'Fossum', 'Gang', 'Gay', 'Geaccone', 'Germany', 'Gilberth-Smith', 'Giron', 'Giffith', 'Grigsby', 'Guzman', 'Haedicke', 'Hain', 'Harris', 'Hayslett', 'Heard', 'Hendrickson', 'Hernandez', 'Hodge', 'Holst', 'Horton', 'Hyatt', 'Hyvl', 'Jones', 'Kaminski', 'Kean', 'Keavey', 'Keiser', 'King', 'Kitchen', 'Kuykendall', 'Lavorato', 'Lay', 'Lenhart', 'Lewis', 'Linder', 'Lokay', 'Lokey', 'Love', 'Lucci', 'Maggi', 'Mann', 'Martin', 'May', 'McCarty', 'McConnell', 'Mckay', 'Mckay', 'McLaughlin', 'Merriss', 'Meyers', 'Mims-Thurston', 'Motley', 'Neal', 'Nemec', 'Panus', 'Parks', 'Pereira', 'Perlingiere', 'Pimenov', 'Platter', 'Presto', 'Quenet', 'Quigley', 'Rapp', 'Reitmeyer', 'Richey', 'Ring', 'Ring', 'Rodrigue', 'Rogers', 'Ruscitti', 'Sager', 'Saibi', 'Salisbury', 'Sanchez', 'Sanders', 'Scholtes', 'Schoolcraft', 'Schwieger', 'Scott', 'Semperger', 'Shackleton', 'Shankman', 'Shapiro', 'Shively', 'Skilling', 'Slinger', 'Smith', 'Solberg', 'South', 'Staab', 'St. Clair', 'Steffes', 'Stepenovitch', 'Stokley', 'Storey', 'Sturm', 'Swerzbin', 'Symes', 'Taylor', 'Tholt', 'Thomas', 'Townsend', 'Tycholiz', 'Ward', 'Watson', 'Weldon', 'Whalley', 'White', 'Whitt', 'Williams', 'Williams', 'Wolfe', 'Zipper', 'Zufferli']
-        }, 
-        dressage : {
-            first: ['Belinda', 'Susan', 'Heather', 'Robert', 'Charlotte', 'Allison', 'Sloan', 'Robert', 'Kyra', 'Jackie', 'Jan', 'Patricia', 'Laura', 'Lendon', 'Hilda', 'Marjorie', 'Frank', 'Guy', 'Tami', 'Ashley', 'Courtney', 'Isaac', 'Carol', 'Libby', 'Adrienne', 'Anna', 'Edith', 'Debbie', 'Karen', 'Alvin', 'Dorothy', 'Leslie', 'Mikala', 'Jessica', 'Marcus', 'Hartmann', 'Annie', 'Kasey', 'Steffen', 'Lars', 'Sandy', 'Donnan', 'Michael', 'Rick', 'Jane', 'Sabine', 'Guenter', 'Lynn', 'Kate', 'Lois', 'Earl', 'Christine', 'Roxanne', 'Sarah', 'Hiram', 'Elaine', 'Lisa', 'John'],
-            last: ['Baudin', 'Blinks', 'Blitz', 'Borg', 'Bredahl', 'Brock', 'Doak', 'Dover', 'Downton', 'Ducci', 'Ebeling', 'Galvin', 'Graves', 'Gray', 'Gurney', 'Haines', 'Henry', 'Henry', 'Hoag', 'Holzer', 'King-Dye', 'Kitts', 'Lavell', 'Locke', 'Lyle', 'Marek', 'Master', 'McDonald', 'McIntosh', 'Moore', 'Morkis', 'Morse', 'Münter', 'Newberry-Ransehousen', 'Orlob', 'Pauly', 'Peavy', 'Perry-Glass', 'Peters', 'Petersen', 'Pflueger', 'Plumb', 'Poulin', 'Rockefeller-Silvia', 'Savoie', 'Schut-Kery', 'Seidel', 'Seidemann', 'Shoemaker', 'Stephens', 'Foster Thomson', 'Traurig', 'Trunnell', 'Tubman', 'Tuttle', 'Watt', 'Wilcox', 'Winnett']
-        }, 
-        declarationSigners : {
-            first: ['John', 'Josiah', 'William', 'Matthew', 'Samuel', 'John', 'Robert', 'Elbridge', 'Stephen', 'William', 'Roger', 'Samuel', 'William', 'Oliver', 'Philip', 'Francis', 'Lewis', 'Richard', 'John', 'Francis', 'John', 'Abraham', 'Robert', 'Benjamin', 'Benjamin', 'John', 'George', 'James', 'George', 'James', 'George', 'Caesar', 'George', 'Thomas', 'Samuel', 'William', 'Thomas', 'Charles', 'George', 'Richard', 'Thomas', 'Benjamin', 'Thomas', 'Francis', 'Carter', 'William', 'Joseph', 'John', 'Edward', 'Thomas', 'Thomas', 'Arthur', 'Button', 'Lyman', 'George'],
-            last: ['Hancock', 'Bartlett', 'Whipple', 'Thornton', 'Adams', 'Adams', 'Treat Paine', 'Gerry', 'Hopkins', 'Ellery', 'Sherman', 'Huntington', 'Williams', 'Wolcott', 'Livingston', 'Lewis', 'Morris', 'Stockton', 'Witherspoon', 'Hopkinson', 'Hart', 'Clark', 'Morris', 'Rush', 'Franklin', 'Morton', 'Clymer', 'Smith', 'Taylor', 'Wilson', 'Ross', 'Rodney', 'Read', 'McKean', 'Chase', 'Paca', 'Stone', 'Carroll', 'Wythe', 'Henry Lee', 'Jefferson', 'Harrison', 'Nelson', 'Lightfoot Lee', 'Braxton', 'Hooper', 'Hewes', 'Penn', 'Rutledge', 'Heyward', 'Lynch', 'Middleton', 'Gwinnett', 'Hall', 'Walton'
-            ]
+        german : {
+            first: ['Hans', 'Peter', 'Klaus', 'Wolfgang', 'Ursula', 'Heidi', 'Friedrich', 'Johann', 'Gisela', 'Monika', 'Stefan', 'Martina', 'Thomas', 'Sabine', 'Karl', 'Helmut', 'Anja', 'Jürgen', 'Claudia', 'Rainer'],
+            last: ['Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann', 'Koch', 'Bauer', 'Richter', 'Klein', 'Wolf', 'Schröder', 'Neumann', 'Schwarz', 'Zimmermann', 'Braun']
         }
     }
 
@@ -543,25 +516,25 @@
             }
         },
         userName: "John Doe",
-        userTitle: "Mr.",
-        recipientName: "Recipient Name",
-        recipientTitle: "Recipient Title",
-        recipientAddressLine1: "102 Main Street",
-        recipientAddressLine2: "Apt 39",
+        userTitle: "Herr",
+        recipientName: "Empfängername",
+        recipientTitle: "Empfängertitel",
+        recipientAddressLine1: "102 Hauptstraße",
+        recipientAddressLine2: "Wohnung 39",
         recipientAddressLine3: "Cambridge, MA, 02138",
-        reSubject: "Subject",
+        reSubject: "Betreff",
         firmPartnersNames : ["George Dewey", "John Cheatem", "Amanda Howe"],
-        firmPartnersSource: "greenwich",
+        firmPartnersSource: "german",
         firmName: "Nammeeee",
         firmYear: "1893",
         firmFloor: 4,
         firmAddressLine1: "5 John F. Kennedy St.",
-        firmAddressLine2: "4th Floor",
+        firmAddressLine2: "4. Etage",
         firmAddressLine3: "Cambridge, MA, 02138",
         firmPhone: "123-456-7890",
-        salutation: "To whom it may concern,",
+        salutation: "Sehr geehrte Damen und Herren,",
         textBody: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        closing: "Sincerely,",
+        closing: "Mit freundlichen Grüßen,",
         senderName: "Morry Kolman"   
     }
   </script>
@@ -569,90 +542,91 @@
 <body>
     <header id="siteHeader" class="siteHeader">
         <h1>Heavyweight</h1>
-        <h2 style="text-align: center"><i>All of the gravitas, none of the fees</i></h2>
+        <h2 style="text-align: center"><i>Die ganze Seriosität, ohne Gebühren</i></h2>
         <br/>
-        <p style="text-align: center;">Heavyweight lets you create important-looking letters in seconds.
+        <p style="text-align: center;">Mit Heavyweight können Sie in Sekundenschnelle wichtig aussehende Briefe erstellen.
         <br/>
         <br/>
-        Watch <a href="https://video.rhizome.org/w/cWgMjxRWG824mcUQEjoPSA" target="_blank">the presentation</a> and read the <a href="https://kendraalbert.com/2025/07/21/lawyer-letters-without-lawyers.html" target="_blank">blog post</a>.</p>
-        <p>Read the <a href="./about.html">about page</a> for more information.</p>
+        Sehen Sie sich <a href="https://video.rhizome.org/w/cWgMjxRWG824mcUQEjoPSA" target="_blank">die Präsentation</a> an und lesen Sie den <a href="https://kendraalbert.com/2025/07/21/lawyer-letters-without-lawyers.html" target="_blank">Blogbeitrag</a>.</p>
+        <p>Lesen Sie die <a href="./about.html">Über-Seite</a> für weitere Informationen.</p>
         <div class="buttonContainer" id="buttonContainer">
-            <button onclick="generatePDF()">Update PDF</button>
-            <button onclick="downloadPDF()">Download PDF</button>
-            <button onclick="uploadPDF()">Upload Past PDF</button>
+            <button onclick="generatePDF()">PDF aktualisieren</button>
+            <button onclick="downloadPDF()">PDF herunterladen</button>
+            <button onclick="uploadPDF()">Vergangenes PDF hochladen</button>
         </div>
     </header>
     <div id="main" class="main">
     <div id="inputs" class="inputs">
         <!-- <div id="exampleButtonContainer" class="exampleButtonContainer">
             <select id="exampleSelect" class="exampleSelect" onchange="prefillRecipient(this.value)">
-                <option value="custom">Custom</option>
+                <option value="custom">Benutzerdefiniert</option>
                 <option value="delta">Delta</option>
                 <option value="amazon">Amazon</option>
                 <option value="tesla">Tesla</option>
             </select>
         </div> -->
-    <h4>Recipient: Who are you sending this letter to?</h4>
+    <h4>Empfänger: An wen senden Sie diesen Brief?</h4>
     <div id="prefillButtonContainer" class="prefillButtonContainer">
         <select id="prefillSelect" class="prefillSelect" onchange="prefillRecipient(this.value)">
-            <option value="custom">Custom</option>
-            <option value="delta">Delta</option>
+            <option value="custom">Benutzerdefiniert</option>
+            <option value="lufthansa">Lufthansa</option>
             <option value="amazon">Amazon</option>
             <option value="tesla">Tesla</option>
-            <option value="landlord">Landlord Repair Request (example)</option>
-            <option value="workplace">Workplace (example)</option>
-            <option value="client">Overdue Client (Generic Template)</option>
-            <option value="securityDeposit">Security Deposit Request (Generic Template)</option>
+            <option value="landlord">Reparaturanfrage an Vermieter (Beispiel)</option>
+            <option value="workplace">Arbeitsplatz (Beispiel)</option>
+            <option value="client">Überfälliger Kunde (Allgemeine Vorlage)</option>
+            <option value="securityDeposit">Kaution Rückforderung (Allgemeine Vorlage)</option>
         </select>
     </div>
-      <input type="text" id="recipientInput" placeholder="Recipient Name"><br/>
-      <!-- <input type="text" id="recipientTitleInput" placeholder="Recipient Title"><br/> -->
-      <input type="text" id="recipientAddressLine1Input" placeholder="Recipient Address Line 1"><br/>
-      <input type="text" id="recipientAddressLine2Input" placeholder="Recipient Address Line 2"><br/>
-      <input type="text" id="recipientAddressLine3Input" placeholder="Recipient Address Line 3">
+      <input type="text" id="recipientInput" placeholder="Empfängername"><br/>
+      <!-- <input type="text" id="recipientTitleInput" placeholder="Empfängertitel"><br/> -->
+      <input type="text" id="recipientAddressLine1Input" placeholder="Empfängeradresse Zeile 1"><br/>
+      <input type="text" id="recipientAddressLine2Input" placeholder="Empfängeradresse Zeile 2"><br/>
+      <input type="text" id="recipientAddressLine3Input" placeholder="Empfängeradresse Zeile 3">
 
-      <h4>Topic: What is the subject of this letter?</h4>
-      <input type="text" id="reSubjectInput" placeholder="Subject"><br/>
-      <textarea id="textBodyInput" placeholder="Letter Body"></textarea>
-            <h4>Firm: Who is sending this letter?</h4>
-            <span>Snootiness:</span> <span id="snootinessNumber"></span>
+      <h4>Thema: Was ist der Betreff dieses Briefes?</h4>
+      <input type="text" id="reSubjectInput" placeholder="Betreff"><br/>
+      <textarea id="textBodyInput" placeholder="Briefinhalt"></textarea>
+            <h4>Firma: Wer sendet diesen Brief?</h4>
+            <span>Seriosität:</span> <span id="snootinessNumber"></span>
             <input type="range" id="snootinessInput" min="1" max="5" value="3">
             <br/>
-            <span># of Partners:</span> <span id="nameNumberNumber"></span>
+            <span>Anzahl der Partner:</span> <span id="nameNumberNumber"></span>
             <br/>
             <input type="range" id="nameNumberInput" min="0" max="69" value="3">
             <br/>
-            <span>Floor:</span> <span id="firmFloorNumber"></span>
+            <span>Etage:</span> <span id="firmFloorNumber"></span>
             <br/>
             <input type="range" id="firmFloorInput" min="1" max="100" value="30">
             <br/>
-            <span>Age of firm:</span> <span id="firmAgeNumber"></span>
+            <span>Alter der Firma:</span> <span id="firmAgeNumber"></span>
             <br/>
             <input type="range" id="firmAgeInput" min="1" max="250" value="69">
             <br/>
-            <span>What is the source of the names?</span>
+            <span>Was ist die Quelle der Namen?</span>
             <br/>
       <select id="nameSourceInput">
         <option value="mayflower">Mayflower Manifest</option>
-        <option value="greenwich">Greenwich, CT. Town Representatives</option>
-        <option value="enron">Enron Executives</option>
-        <option value="dressage">Equestrian Riders</option>
-        <option value="declarationSigners">Declaration of Independence</option>
+        <option value="greenwich">Greenwich, CT. Stadtvertreter</option>
+        <option value="enron">Enron Führungskräfte</option>
+        <option value="dressage">Reiter</option>
+        <option value="declarationSigners">Unabhängigkeitserklärung</option>
+        <option value="german">Deutsche Namen</option>
       </select>
 
       <div style="display: none">
 
-          <h4>You: Who are they writing on behalf of?</h4>
+          <h4>Sie: In wessen Namen schreiben sie?</h4>
           <select id="userTitleInput">
-              <option value="Mr.">Mr.</option>
-              <option value="Ms.">Ms.</option>
+              <option value="Herr">Herr</option>
+              <option value="Frau">Frau</option>
               <option value="Mx.">Mx.</option>
             </select>
-            <input type="text" id="userNameInput" placeholder="Your Name"><br/>
+            <input type="text" id="userNameInput" placeholder="Ihr Name"><br/>
         </div>
     
 
-      <button onclick="generatePDF()">Update PDF</button>
+      <button onclick="generatePDF()">PDF aktualisieren</button>
 
       <div id="content" style="width: 210mm; height: 297mm; padding: 20mm; background: white; display: none">
         <div id="pageContent" class="template1">
@@ -673,17 +647,17 @@
                 <span id="date" class="date"></span>
             </header>
             <div id="recipient">
-                <p id="recipientName" class="recipientName">Recipient Name</p>
-                <p id="recipientAddress" class="recipientAddress">Recipient Address</p>
+                <p id="recipientName" class="recipientName">Empfängername</p>
+                <p id="recipientAddress" class="recipientAddress">Empfängeradresse</p>
             </div>
             <div id="letterContent">
-                <p id="reSubject" class="reSubject"><b>Subject</b></p>
-                <p id="salutation" class="salutation">To whom it may concern,</p>
+                <p id="reSubject" class="reSubject"><b>Betreff</b></p>
+                <p id="salutation" class="salutation">Sehr geehrte Damen und Herren,</p>
                 <p id="textBody" class="textBody"></p>
             </div>
             <br/>
             <div id="letterFooter" class="letterFooter">
-                <p id="closing" class="closing">Sincerely,</p>
+                <p id="closing" class="closing">Mit freundlichen Grüßen,</p>
                 <p id="senderSignature" class="senderSignature">John Doe</p>
                 <p id="senderName" class="senderName">John Doe</p>
             </div>
@@ -704,7 +678,7 @@
 
     let addressToUse = addresses[Math.floor(Math.random() * addresses.length)];
     variables.firmAddressLine1 = `${Math.floor(Math.random() * 10000)} ${addressToUse[0]}`;
-    variables.firmAddressLine2 = `Floor ${15 * variables.snootiness + Math.floor(Math.random() * 30 + 1)}`;
+    variables.firmAddressLine2 = `Etage ${15 * variables.snootiness + Math.floor(Math.random() * 30 + 1)}`;
     variables.firmAddressLine3 = `${addressToUse[1]}`;
 
     //FORM FUNCTIONS
@@ -719,13 +693,13 @@
             document.getElementById('reSubjectInput').value = '';
             document.getElementById('textBodyInput').value = '';
             break;
-        case 'delta':
-            document.getElementById('recipientInput').value = exampleRecipients.delta.recipientName;
-            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.delta.recipientAddressLine1;
-            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.delta.recipientAddressLine2;
-            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.delta.recipientAddressLine3;
-            document.getElementById('reSubjectInput').value = exampleRecipients.delta.reSubject;
-            document.getElementById('textBodyInput').value = exampleRecipients.delta.textBody;
+        case 'lufthansa':
+            document.getElementById('recipientInput').value = exampleRecipients.lufthansa.recipientName;
+            document.getElementById('recipientAddressLine1Input').value = exampleRecipients.lufthansa.recipientAddressLine1;
+            document.getElementById('recipientAddressLine2Input').value = exampleRecipients.lufthansa.recipientAddressLine2;
+            document.getElementById('recipientAddressLine3Input').value = exampleRecipients.lufthansa.recipientAddressLine3;
+            document.getElementById('reSubjectInput').value = exampleRecipients.lufthansa.reSubject;
+            document.getElementById('textBodyInput').value = exampleRecipients.lufthansa.textBody;
             break;
         case 'amazon':
             document.getElementById('recipientInput').value = exampleRecipients.amazon.recipientName;
@@ -839,7 +813,7 @@
         variables.firmYear = new Date().getFullYear() - document.getElementById('firmAgeInput').value;
         //firm stuff
         variables.firmFloor = document.getElementById('firmFloorInput').value;
-        variables.firmAddressLine2 = `${variables.firmFloor}${variables.firmFloor.endsWith('11') ? 'th' : variables.firmFloor.endsWith('12') ? 'th' : variables.firmFloor.endsWith('13') ? 'th' : variables.firmFloor.endsWith('1') ? 'st' : variables.firmFloor.endsWith('2') ? 'nd' : variables.firmFloor.endsWith('3') ? 'rd' : 'th'} Floor`;
+        variables.firmAddressLine2 = `${variables.firmFloor}${variables.firmFloor.endsWith('11') ? 'th' : variables.firmFloor.endsWith('12') ? 'th' : variables.firmFloor.endsWith('13') ? 'th' : variables.firmFloor.endsWith('1') ? 'st' : variables.firmFloor.endsWith('2') ? 'nd' : variables.firmFloor.endsWith('3') ? 'rd' : 'th'} Etage`;
         // let addressToUse = addresses[Math.floor(Math.random() * addresses.length)];
         //update firm address
         
@@ -851,7 +825,7 @@
         document.getElementById('snootinessNumber').innerHTML = variables.snootiness;
         document.getElementById('nameNumberNumber').innerHTML = variables.firmPartnersNames.length;
         document.getElementById('firmFloorNumber').innerHTML = variables.firmAddressLine2;
-        document.getElementById('firmAgeNumber').innerHTML = `${document.getElementById('firmAgeInput').value} years`;
+        document.getElementById('firmAgeNumber').innerHTML = `${document.getElementById('firmAgeInput').value} Jahre`;
     }
     //GENERATION FUNCTIOND
     const makeHeader = () => {
@@ -873,7 +847,7 @@
             firmName = firmName.slice(0, lastCommaIndex) + " &" + firmName.slice(lastCommaIndex + 1);
         }
         document.getElementById('firmName').innerHTML = firmName
-        document.getElementById('firmYear').innerHTML = `<i>Est. ${variables.firmYear}</i>`;
+        document.getElementById('firmYear').innerHTML = `<i>Gegr. ${variables.firmYear}</i>`;
         const firmAddress = document.getElementById('firmAddress');        //make the firm address the address of the firm
         document.getElementById('firmAddressLine1').innerHTML = variables.firmAddressLine1
         document.getElementById('firmAddressLine2').innerHTML = variables.firmAddressLine2
@@ -918,7 +892,7 @@
         const salutation = document.getElementById('salutation');
         const textBody = document.getElementById('textBody');
 
-        reSubject.innerHTML = `<b>Re: ${variables.reSubject}</b>`
+        reSubject.innerHTML = `<b>Betreff: ${variables.reSubject}</b>`
         salutation.innerHTML = variables.salutation
         // console.log("variables.textBody", variables.textBody)
         textBody.innerHTML = `${variables.textBody.replace(/\n/g, '<br/>')}`
@@ -1040,7 +1014,7 @@
         }
       const date = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date').textContent = date.toLocaleDateString('en-US', options);
+      document.getElementById('date').textContent = date.toLocaleDateString('de-DE', options);
 
       const renderTarget = document.getElementById('renderTarget');
       renderTarget.style.fontFamily = fontFamily[variables.snootiness - 1];
@@ -1130,7 +1104,7 @@
     //   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       stringifiedVariables = JSON.stringify(variables);
       pdf.addMetadata(stringifiedVariables, 'variables');
-      pdf.save('DemandLetter_Final_2.pdf');
+      pdf.save('Forderungsschreiben_Final_2.pdf');
       fetch('https://wemakeinter.net/diyPixel/heavyweightPixel.php?event=pdfGenerated')
 
     }
